@@ -1,0 +1,23 @@
+<!--
+  ~ Copyright $YEAR$ Benjamin Fagin
+  ~
+  ~ This work is licensed under the Common Development and Distribution License (CDDL), Version 1.0
+  ~
+  ~ Read the included LICENSE.TXT for more information.
+  ~
+  ~ --------------------------------------------------------------------
+  -->
+
+<component name="libraryTable">
+  <library name="Maven: commons-logging:commons-logging:1.1.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

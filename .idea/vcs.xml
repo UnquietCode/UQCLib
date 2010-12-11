@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright $YEAR$ Benjamin Fagin
+  ~
+  ~ This work is licensed under the Common Development and Distribution License (CDDL), Version 1.0
+  ~
+  ~ Read the included LICENSE.TXT for more information.
+  ~
+  ~ --------------------------------------------------------------------
+  -->
+
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+  </component>
+</project>
+

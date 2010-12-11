@@ -1,0 +1,23 @@
+<!--
+  ~ Copyright $YEAR$ Benjamin Fagin
+  ~
+  ~ This work is licensed under the Common Development and Distribution License (CDDL), Version 1.0
+  ~
+  ~ Read the included LICENSE.TXT for more information.
+  ~
+  ~ --------------------------------------------------------------------
+  -->
+
+<component name="libraryTable">
+  <library name="Maven: log4j:log4j:1.2.16">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.16/log4j-1.2.16.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.16/log4j-1.2.16-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.16/log4j-1.2.16-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
