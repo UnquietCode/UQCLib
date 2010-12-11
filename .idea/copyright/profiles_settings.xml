@@ -1,15 +1,5 @@
-<!--
-  ~ Copyright $YEAR$ Benjamin Fagin
-  ~
-  ~ This work is licensed under the Common Development and Distribution License (CDDL), Version 1.0
-  ~
-  ~ Read the included LICENSE.TXT for more information.
-  ~
-  ~ --------------------------------------------------------------------
-  -->
-
 <component name="CopyrightManager">
-  <settings default="CDDL">
+  <settings default="">
     <module2copyright />
   </settings>
 </component>

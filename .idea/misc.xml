@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright $YEAR$ Benjamin Fagin
-  ~
-  ~ This work is licensed under the Common Development and Distribution License (CDDL), Version 1.0
-  ~
-  ~ Read the included LICENSE.TXT for more information.
-  ~
-  ~ --------------------------------------------------------------------
-  -->
-
 <project version="4">
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
+  </component>
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
   </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
@@ -157,6 +150,9 @@
         <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
       </item>
     </group>
+  </component>
+  <component name="ProjectResources">
+    <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
