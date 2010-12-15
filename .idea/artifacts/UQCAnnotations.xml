@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact name="UQCAnnotations">
+    <output-path>$PROJECT_DIR$/out/artifacts/UQCAnnotations</output-path>
+    <root id="root">
+      <element id="archive" name="UQCAnnotations.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/UQCAnnotations/META-INF/MANIFEST.MF" />
+          <element id="directory" name="services">
+            <element id="file-copy" path="$PROJECT_DIR$/UQCAnnotations/META-INF/services/javax.annotation.processing.Processor" />
+          </element>
+        </element>
+        <element id="module-output" name="UQCAnnotations" />
+      </element>
+    </root>
+  </artifact>
+</component>

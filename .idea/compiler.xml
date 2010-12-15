@@ -18,7 +18,11 @@
       <entry name="?*.tld" />
       <entry name="?*.ftl" />
     </wildcardResourcePatterns>
-    <annotationProcessing enabled="false" useClasspath="true" />
+    <annotationProcessing enabled="false" useClasspath="false">
+      <processorPath value="$PROJECT_DIR$/out/artifacts/UQCAnnotations/UQCAnnotations.jar" />
+      <processor name="unquietcode.annotations.WarningProcessor" options="" />
+      <processModule name="UQCLib" />
+    </annotationProcessing>
   </component>
 </project>
 
