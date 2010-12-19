@@ -8,10 +8,9 @@
  * --------------------------------------------------------------------
  */
 
-package unquietcode.test.numbers;
+package unquietcode.numbers;
 
 import org.junit.Test;
-import unquietcode.numbers.Ordinal;
 
 import java.util.Random;
 

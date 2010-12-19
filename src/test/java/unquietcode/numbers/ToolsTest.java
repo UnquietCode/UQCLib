@@ -8,13 +8,12 @@
  * --------------------------------------------------------------------
  */
 
-package unquietcode.test.numbers;
+package unquietcode.numbers;
 
 import org.junit.Test;
 
 import java.util.Random;
 
-import unquietcode.numbers.NumberTools;
 import unquietcode.util.StringUtils;
 
 import static unquietcode.util.Shortcuts.*;

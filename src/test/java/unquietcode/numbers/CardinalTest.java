@@ -8,10 +8,10 @@
  * --------------------------------------------------------------------
  */
 
-package unquietcode.test.numbers;
+package unquietcode.numbers;
 
 import org.junit.Test;
-import unquietcode.numbers.Cardinal;
+
 import static unquietcode.util.Shortcuts.*;
 
 

@@ -8,18 +8,15 @@
  * --------------------------------------------------------------------
  */
 
-package unquietcode.test.util.closure;
+package unquietcode.stately.closure;
 
 import org.junit.Test;
-import unquietcode.stately.closure.Closure;
-import unquietcode.stately.closure.Closure1;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 import static unquietcode.util.Shortcuts.out;
-import static unquietcode.util.Shortcuts.outN;
 
 /**
  * @author Benjamin Fagin

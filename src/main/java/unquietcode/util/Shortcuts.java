@@ -10,6 +10,8 @@
 
 package unquietcode.util;
 
+import javax.lang.model.type.PrimitiveType;
+
 /**
  * @author Ben
  * @version 1.0
