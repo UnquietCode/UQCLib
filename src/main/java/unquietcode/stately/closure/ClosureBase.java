@@ -13,14 +13,14 @@ package unquietcode.stately.closure;
 import java.lang.reflect.Field;
 
 /**
- * @author Benjamin Fagin
- * Date: Dec 7, 2010
+ * @author  Benjamin Fagin
+ * @version Dec 7, 2010
  */
 abstract class ClosureBase<Z> {
 	Object arguments[];
-	protected int depth = 0;
+	protected boolean wrapped = false;
 
-	protected ClosureBase(Object... args) {
+	protected ClosureBase(Object...args) {
 		if (args == null)
 			arguments = new Object[] {null};
 		else
@@ -58,23 +58,24 @@ abstract class ClosureBase<Z> {
 	}
 
 
-	public int getDepth() {
-		return depth;
+	public boolean isWrapped() {
+		return wrapped;
 	}
 
 
-	//TODO
-//	public abstract Class[] getArgumentTypes();
-//		return null; //make the 'n' live template go back to the beginning of the line above it?
+	public Class[] getArgumentTypes() {
+		// get the array of passed in arguments
+		Class retval[] = new Class[arguments.length];
 
+		for (int i=0; i < arguments.length; ++i)
+			retval[i] = arguments[i].getClass();
+
+		return retval;
+	}
 
 	@SuppressWarnings("unchecked")
 	public void curry(int var, Object replacement) {
-		ClosureBase closure = this;
-		while (closure.getDepth() > 0) {
-			closure = (Closure) closure.a1();
-		}
-
+		ClosureBase closure = wrapped ? (ClosureBase) this.arg(1) : this;
 		var -= 1;
 		Field f[] = closure.getClass().getDeclaredFields();
 

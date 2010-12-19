@@ -24,9 +24,7 @@ public abstract class Closure8<Z, A,B,C,D,E,F,G,H> extends ClosureBase<Z> {
 
 	@SuppressWarnings("unchecked")
 	public Closure<Z> toClosure() {
-		ClosureBase base = this;
-		while (base.depth > 0)
-			base = (ClosureBase) base.arg(1);
+		ClosureBase base = wrapped ? (ClosureBase) this.arg(1) : this;
 
 		Closure closure = new Closure(base) {
 			Closure8 c8 = (Closure8) arg(1);
@@ -37,7 +35,7 @@ public abstract class Closure8<Z, A,B,C,D,E,F,G,H> extends ClosureBase<Z> {
 			}
 		};
 
-		closure.depth = base.depth + 1;
+		closure.wrapped = true;
 		closure.setExpectedArgs(8);
 		return closure;
 	}

@@ -11,8 +11,8 @@
 package unquietcode.stately.closure;
 
 /**
- * @author Benjamin Fagin
- * Date: Dec 10, 2010
+ * @author  Benjamin Fagin
+ * @version Dec 10, 2010
  */
 public abstract class Closure3<Z, A,B,C> extends ClosureBase<Z> {
 	public abstract Z run(A p1, B p2, C p3);
@@ -23,9 +23,7 @@ public abstract class Closure3<Z, A,B,C> extends ClosureBase<Z> {
 
 	@SuppressWarnings("unchecked")
 	public Closure<Z> toClosure() {
-		ClosureBase base = this;
-		while (base.depth > 0)
-			base = (ClosureBase) base.arg(1);
+		ClosureBase base = wrapped ? (ClosureBase) this.arg(1) : this;
 		
 		Closure closure = new Closure(base) {
 			Closure3 c3 = (Closure3) arg(1);
@@ -36,7 +34,7 @@ public abstract class Closure3<Z, A,B,C> extends ClosureBase<Z> {
 			}
 		};
 
-		closure.depth = base.depth + 1;
+		closure.wrapped = true;
 		closure.setExpectedArgs(3);
 		return closure;
 	}

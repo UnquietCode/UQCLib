@@ -1,8 +1,8 @@
 package unquietcode.stately.closure;
 
 /**
- * @author Ben
- * Date: 12/12/10
+ * @author Benjamin Fagin
+ * @version 12/12/10
  */
 public abstract class Closure<Z> extends ClosureBase<Z> {
 	private int expectedArgs = -1;
@@ -25,7 +25,7 @@ public abstract class Closure<Z> extends ClosureBase<Z> {
 		return this;
 	}
 
-	public Closure(Object... args) {
+	public Closure(Object...args) {
 		super(args);
 	}
 }

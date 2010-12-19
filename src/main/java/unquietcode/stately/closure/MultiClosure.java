@@ -18,11 +18,11 @@ import java.lang.reflect.Method;
 
 /**
  * @author  Benjamin Fagin
- * Date:    Dec 10, 2010
+ * @version Dec 10, 2010
  */
 public abstract class MultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> {
-	private static final int MAX_PARAMS = 6;            //for now, it's set at 6
-	boolean isImplemented[] = new boolean[MAX_PARAMS + 1];  //0-5, and then 6 is vararg
+	private static final int MAX_PARAMS = 6;                //for now, it's set at 6
+	boolean isImplemented[] = new boolean[MAX_PARAMS+2];  //0-6, and then 7 is vararg
 
 
 	public MultiClosure(Object...args) {
@@ -31,18 +31,17 @@ public abstract class MultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> {
 		//set up an implemented map
 		Class c = this.getClass();
 		Method methods[] = c.getMethods();
-//TODO get these right.
+
 		for (Method method : methods) {
 			if (method.getName().equals("run")) {
 				if (method.isVarArgs()) {
-					isImplemented[MAX_PARAMS] = !method.isAnnotationPresent(Original.class);
+					isImplemented[MAX_PARAMS+1] = !method.isAnnotationPresent(Original.class);
 				} else {
 					//find out how many param
 					Class classes[] = method.getParameterTypes();
 					int number = classes == null ? -1 : classes.length;
-					--number;
 					
-					if (number < 0 || number >= MAX_PARAMS) {
+					if (number < 0 || number > MAX_PARAMS) {
 						continue; //not one of our methods
 					}
 
@@ -64,46 +63,45 @@ public abstract class MultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> {
 
 	@Original
 	public Z run() {
-		throw new NotImplementedException();
+		return run(new Object[]{});
 	}
 	@Original
 	public Z run(A p1) {
-		throw new NotImplementedException();
+		return run(new Object[]{p1});
 	}
 	@Original
 	public Z run(A p1, B p2) {
-		throw new NotImplementedException();
+		return run(new Object[]{p1, p2});
 	}
 	@Original
 	public Z run(A p1, B p2, C p3) {
-		throw new NotImplementedException();
+		return run(new Object[]{p1, p2, p3});
 	}
 	@Original
 	public Z run(A p1, B p2, C p3, D p4) {
-		throw new NotImplementedException();
+		return run(new Object[]{p1, p2, p3 ,p4});
+	}
+	@Original
+	public Z run(A p1, B p2, C p3, D p4, E p5) {
+		return run(new Object[]{p1, p2, p3 ,p4, p5});
 	}
 	@Original
 	public Z run(A p1, B p2, C p3, D p4, E p5, F p6) {
-		throw new NotImplementedException();
+		return run(new Object[]{p1, p2, p3 ,p4, p5, p6});
 	}
 	@Original
-	public Z run(Object...args) { //TODO
+	public Z run(Object...args) {
 		throw new NotImplementedException();
 	}
-
-	//alternative:
-	//when the class is first initialized (in the default constructor implicity)
-	//check the annotation status and set up a map of overridden methods.
-	//then they are quickly accessible by bolean method.
 
 	public boolean isImplemented(int x) {
 		if (x < 0)
 			return false;
 
-		if (x > MAX_PARAMS)
-			x = MAX_PARAMS;
+		if (x > MAX_PARAMS+1)
+			x = MAX_PARAMS+1;
 
-		return isImplemented[x] || isImplemented[MAX_PARAMS];
+		return isImplemented[x] || isImplemented[MAX_PARAMS+1];
 	}
 
 	//TODO will this work better, easier?
@@ -114,11 +112,7 @@ public abstract class MultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> {
 
 			@Override
 			public Object run() {
-				try {
-					return mc.run();
-				} catch (NotImplementedException ex) {
-					return mc.run(new Object[] {});
-				}
+				return mc.run();
 			}
 		};
 
@@ -133,11 +127,7 @@ public abstract class MultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> {
 
 			@Override
 			public Object run(Object p1) {
-				try {
-					return mc.run(p1);
-				} catch (NotImplementedException ex) {
-					return mc.run(new Object[] {p1});	
-				}
+				return mc.run(p1);
 			}
 		};
 
@@ -151,11 +141,7 @@ public abstract class MultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> {
 
 			@Override
 			public Object run(Object p1, Object p2) {
-				try {
-					return mc.run(p1, p2);
-				} catch (NotImplementedException ex) {
-					return mc.run(new Object[] {p1, p2});
-				}
+				return mc.run(p1, p2);
 			}
 		};
 
@@ -168,11 +154,7 @@ public abstract class MultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> {
 
 			@Override
 			public Object run(Object p1, Object p2, Object p3) {
-				try {
-					return mc.run(p1, p2, p3);
-				} catch (NotImplementedException ex) {
-					return mc.run(new Object[] {p1, p2, p3});
-				}
+				return mc.run(p1, p2, p3);
 			}
 		};
 
@@ -185,11 +167,7 @@ public abstract class MultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> {
 
 			@Override
 			public Object run(Object p1, Object p2, Object p3, Object p4) {
-				try {
-					return mc.run(p1, p2, p3, p4);
-				} catch (NotImplementedException ex) {
-					return mc.run(new Object[] {p1, p2, p3, p4});
-				}
+				return mc.run(p1, p2, p3, p4);
 			}
 		};
 
@@ -203,11 +181,7 @@ public abstract class MultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> {
 
 			@Override
 			public Object run(Object p1, Object p2, Object p3, Object p4, Object p5) {
-				try {
-					return mc.run(p1, p2, p3, p4, p5);
-				} catch (NotImplementedException ex) {
-					return mc.run(new Object[] {p1, p2, p3, p4, p5});
-				}
+				return mc.run(p1, p2, p3, p4, p5);
 			}
 		};
 
@@ -221,11 +195,7 @@ public abstract class MultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> {
 
 			@Override
 			public Object run(Object p1, Object p2, Object p3, Object p4, Object p5, Object p6) {
-				try {
-					return mc.run(p1, p2, p3, p4, p5, p6);
-				} catch (NotImplementedException ex) {
-					return mc.run(new Object[] {p1, p2, p3, p4, p5, p6});
-				}
+				return mc.run(p1, p2, p3, p4, p5, p6);
 			}
 		};
 
