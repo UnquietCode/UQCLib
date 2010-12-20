@@ -15,6 +15,8 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author  Benjamin Fagin
@@ -229,9 +231,10 @@ public abstract class MultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> {
 
 		return (T) closure;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public <T extends Closure> T getClosure() {
+	@Override
+	public Closure<Z> toClosure() {
 		Closure closure = new Closure(this) {
 			MultiClosure mc = (MultiClosure) a1();
 
@@ -241,6 +244,18 @@ public abstract class MultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> {
 			}
 		};
 
-		return (T) closure;
+		return closure;
+	}
+
+	public <T extends MultiClosure, U extends ClosureBase> T makeMultiClosure(U...closures) {
+		// need to find out if more than one type of closure is present
+		Map<Integer, Closure> map = new HashMap<Integer, Closure>();
+
+		for (U c : closures) {
+			//if c.
+		}
+
+
+		return null;
 	}
 }

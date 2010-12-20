@@ -1,7 +1,7 @@
 package unquietcode.stately.closure;
 
 /**
- * @author Benjamin Fagin
+ * @author  Benjamin Fagin
  * @version 12/12/10
  */
 public abstract class Closure<Z> extends ClosureBase<Z> {

@@ -17,8 +17,8 @@ import java.lang.reflect.Field;
  * @version Dec 7, 2010
  */
 abstract class ClosureBase<Z> {
-	Object arguments[];
-	protected boolean wrapped = false;
+	private Object arguments[];
+	boolean wrapped = false;
 
 	protected ClosureBase(Object...args) {
 		if (args == null)
@@ -29,27 +29,27 @@ abstract class ClosureBase<Z> {
 
 	// to get passed in variables
 	@SuppressWarnings("unchecked")
-	protected <A> A a1() {
+	protected final <A> A a1() {
 		return (A) arg(1);
 	}
 
 	@SuppressWarnings("unchecked")
-	public <A> A a2() {
+	public final <A> A a2() {
 		return (A) arg(2);
 	}
 
 	@SuppressWarnings("unchecked")
-	public <A> A a3() {
+	public final <A> A a3() {
 		return (A) arg(3);
 	}
 
 	@SuppressWarnings("unchecked")
-	public <A> A a4() {
+	public final <A> A a4() {
 		return (A) arg(4);
 	}
 
 	@SuppressWarnings("unchecked")
-	public <A> A arg(int var) {
+	public final <A> A arg(int var) {
 		try {
 			return (A) arguments[--var];
 		} catch (ArrayIndexOutOfBoundsException ex) {
@@ -58,12 +58,12 @@ abstract class ClosureBase<Z> {
 	}
 
 
-	public boolean isWrapped() {
+	public final boolean isWrapped() {
 		return wrapped;
 	}
 
 
-	public Class[] getArgumentTypes() {
+	public final  Class[] getArgumentTypes() {
 		// get the array of passed in arguments
 		Class retval[] = new Class[arguments.length];
 
@@ -74,7 +74,7 @@ abstract class ClosureBase<Z> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void curry(int var, Object replacement) {
+	public final void curry(int var, Object replacement) {
 		ClosureBase closure = wrapped ? (ClosureBase) this.arg(1) : this;
 		var -= 1;
 		Field f[] = closure.getClass().getDeclaredFields();
