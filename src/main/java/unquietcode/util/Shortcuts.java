@@ -10,12 +10,10 @@
 
 package unquietcode.util;
 
-import javax.lang.model.type.PrimitiveType;
 
 /**
- * @author Ben
- * @version 1.0
- *          Date: Nov 28, 2010
+ * @author Benjamin Fagin
+ * @version Nov 28, 2010
  */
 public final class Shortcuts {
 
