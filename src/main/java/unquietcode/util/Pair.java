@@ -35,8 +35,8 @@ public class Pair<A, B> {
 	}
 
 	public static class Final<C, D> {
-		public C first;
-		public D second;
+		public final C first;
+		public final D second;
 
 		public Final(C first, D second) {
 			this.first = first;
@@ -44,6 +44,3 @@ public class Pair<A, B> {
 		}
 	}
 }
-
-//TODO like a time and a name/value version would be nice.
-//maybe even do it as Pair, with static inner classes Pair.Time, Pair.NaveValue, Pair.Shoes
