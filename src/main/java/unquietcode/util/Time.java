@@ -58,10 +58,10 @@ public class Time {
 
 	//== Final ==//
 	public static class Final {
-		public int hours;
-		public int minutes;
-		public int seconds;
-		public int milliseconds;
+		public final int hours;
+		public final int minutes;
+		public final int seconds;
+		public final int milliseconds;
 		public final Period period;
 		public final TimeZone timezone;
 
@@ -129,5 +129,16 @@ public class Time {
 		return  null;
 	}
 
+
+	/*
+		public static Pair<Integer, Integer> addTimes(Pair<Integer, Integer> time1, Pair<Integer, Integer> time2) {
+		int newM = time1.first + time2.first;
+		int newS = time2.second + time2.second;
+		newM += newS / 60;
+		newS = newS % 60;
+		return new Pair<Integer, Integer>(newM, newS);
+
+	}
+	 */
 
 }

@@ -10,12 +10,13 @@
 
 package unquietcode.numbers;
 
+import unquietcode.util.Pair;
+
 import java.util.ArrayList;
 
 /**
- * @author Ben
- * @version 1.0
- *          Date: Nov 28, 2010
+ * @author  Benjamin Fagin
+ * @version Nov 28, 2010
  */
 public class NumberTools {
 
