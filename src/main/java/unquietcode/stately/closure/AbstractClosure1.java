@@ -10,6 +10,9 @@
 
 package unquietcode.stately.closure;
 
+import unquietcode.stately.closure.view.Closure1View;
+import unquietcode.stately.closure.view.ClosureView;
+
 /**
  * @author  Benjamin Fagin
  * @version Dec 10, 2010
@@ -18,7 +21,7 @@ package unquietcode.stately.closure;
 public abstract class AbstractClosure1<Z, A> extends ClosureBase<Z> implements Closure1<Z, A> {
 	public abstract Z run(A p1);
 
-	public AbstractClosure1(Object... args) {
+	public AbstractClosure1(Object...args) {
 		super(args);
 	}
 
@@ -27,20 +30,37 @@ public abstract class AbstractClosure1<Z, A> extends ClosureBase<Z> implements C
 	}
 
 	@SuppressWarnings("unchecked")
-	public final Closure<Z> toClosure() {
-		ClosureBase base = wrapped ? (ClosureBase) this.arg(1) : this;
+	public final Closure1View<Z, A> getView() {
+		final Closure1 base = this;
 
-		AbstractClosure closure = new AbstractClosure(base) {
-			AbstractClosure1 c1 = (AbstractClosure1) arg(1);
+		return new Closure1View() {
+			public Object run(Object p1) {
+				return base.run(p1);
+			}
 
-			@Override
-			public Z run(Object...args) {
-				return (Z) c1.run(args[0]);
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
 			}
 		};
+	}
 
-		closure.wrapped = true;
-		closure.setExpectedArgs(1);
-		return closure;
+	@SuppressWarnings("unchecked")
+	public final ClosureView<Z> toClosure() {
+		final Closure1 base = this;
+
+		return new ClosureView<Z>() {
+			public Z run(Object...args) {
+				return (Z) base.run(args[0]);
+			}
+
+			public int getExpectedArgs() {
+				return 1;
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
+			}
+		};
 	}
 }
+

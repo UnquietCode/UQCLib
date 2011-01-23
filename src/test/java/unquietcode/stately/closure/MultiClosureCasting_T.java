@@ -20,32 +20,38 @@ import static unquietcode.util.Shortcuts.out;
  * @version Dec 11, 2010
  */
 //TODO finish work on this
+@SuppressWarnings("unchecked")
 public class MultiClosureCasting_T {
-/*
 	@Test
 	public void downcast() {
-		AbstractMultiClosure<String, String, String, Void, Void, Void, Void> helloMaker =
-		new AbstractMultiClosure<String, String, String, Void, Void, Void, Void>() {
+		// blah blah multiclosures
+		// Note that here the @Override annotation is required, as the class does not require explicitly
+		// implementing the methods. It's pick and choose.
 
-			@Override public String run(String p1) {
-				return "hello " + p1;
+		MultiClosure<String> helloMaker = new AbstractMultiClosure() {
+			String greeting = "Hello";
+
+			public @Override Object run(Object p1) {
+				return greeting + " " + p1;
 			}
 
-			@Override public String run(String p1, String p2) {
-				return "hello " + p1 + " and " + p2;
+			public @Override Object run(Object p1, Object p2) {
+				return greeting + " " + p1 + " and " + p2;
 			}
 
-			@Override public String run(Object... args) {
+			public @Override Object run(Object...args) {
 				StringBuilder sb = new StringBuilder();
-				sb.append("hello to");
+				sb.append(greeting).append(" to");
 
 				int lcv = 0;
 				for (Object o : args) {
 					String s = (String) o;
 					sb.append(" ").append(s);
 
-					if (++lcv != args.length)
-						sb.append(", and");
+					if (lcv == args.length)
+						sb.append(", and"); //TODO fix
+					else if (++lcv != args.length)
+						sb.append(",");
 				}
 
 				return sb.toString();
@@ -57,31 +63,50 @@ public class MultiClosureCasting_T {
 		out(helloMaker.run("Jennifer", "Alexander", "Ryan", "Chris"));
 		out();
 
+
 		// We can try to get a more constrained versions of our helloMaker
-		AbstractClosure1<String, String> singles = helloMaker.getClosure1();
+		Closure1<String, String> singles = helloMaker.toClosure1();
 		out(singles.run("Steven"));
 
 		// Of course, you don't have to type them if you don't want to.
-		AbstractClosure2 doubles = helloMaker.getClosure2();
+		Closure2 doubles = helloMaker.toClosure2();
 		out(doubles.run("Tabitha", "Aragorn"));
 
-		//we didn't define a 3 argument version, but we did define a vararg, so it will work
-		AbstractClosure3<String, String, String, String> fallback = helloMaker.getClosure3();
+		// We didn't define a 3 argument version, but we did define a vararg, so it will work.
+		Closure3<String, String, String, String> fallback = helloMaker.toClosure3();
 		out(fallback.run("Arnold", "Julie", "Marissa"));
-		//however, if we did not define a vararg version, we would have gotten an exception at runtime
+
+		// However, if we did not define a vararg version, we would have gotten an exception at runtime!
+
+		// We can even curry the sdfsd
+		out();
+		helloMaker.curry(1, "Goodbye");
+		Closure closure = helloMaker.toClosure();
+		out(closure.run("Bob", "Allan", "Susan", "Jennifer", "Alexander", "Ryan", "Chris"));
+		out(helloMaker.run("Bob", "Allan", "Susan", "Jennifer", "Alexander", "Ryan", "Chris"));
+
+		//TODO so is this the way it should be?
+		// The expectation should be that currying a closure will only affect that closure.
+		// right now it alters the base.
+		//TODO test this on closure3 -> closure for example, though I suspect the same result.
+
+		out();
+		helloMaker.curry(1, "Welcome back");
+		out(closure.run("Bob", "Allan", "Susan", "Jennifer", "Alexander", "Ryan", "Chris"));
+		out(helloMaker.run("Bob", "Allan", "Susan", "Jennifer", "Alexander", "Ryan", "Chris"));
 	}
 
 	@Test
 	public void mcTest() {
-		AbstractMultiClosure<String, String, String, Void, Void, Void, Void> helloMaker =
-		new AbstractMultiClosure<String, String, String, Void, Void, Void, Void>() {
+		AbstractMultiClosure<String> helloMaker =
+		new AbstractMultiClosure<String>() {
 
-			@Override public String run(String p1) {
+			public String run(String p1) {
 				this.wrapped = false; //TODO this is a problem
 				return "hello " + p1;
 			}
 
-			@Override public String run(String p1, String p2) {
+			public String run(String p1, String p2) {
 				return "hello " + p1 + " and " + p2;
 			}
 		};
@@ -92,7 +117,7 @@ public class MultiClosureCasting_T {
 
 		//helloMaker.run(1,2,3,4,5); //exception test
 	}
-*/
+
 
 
 }

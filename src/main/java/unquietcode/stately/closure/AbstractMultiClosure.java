@@ -15,14 +15,12 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author  Benjamin Fagin
  * @version Dec 10, 2010
  */
-public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> implements MultiClosure<Z, A,B,C,D,E,F> {
+public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements MultiClosure<Z> {
 	private static final int MAX_PARAMS = 6;                // for now, it's set at 6
 	boolean isImplemented[] = new boolean[MAX_PARAMS+2];    // 0-6, and then 7 is vararg
 
@@ -68,27 +66,27 @@ public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z
 		return run(new Object[]{});
 	}
 	@Original
-	public Z run(A p1) {
+	public Z run(Object p1) {
 		return run(new Object[]{p1});
 	}
 	@Original
-	public Z run(A p1, B p2) {
+	public Z run(Object p1, Object p2) {
 		return run(new Object[]{p1, p2});
 	}
 	@Original
-	public Z run(A p1, B p2, C p3) {
+	public Z run(Object p1, Object p2, Object p3) {
 		return run(new Object[]{p1, p2, p3});
 	}
 	@Original
-	public Z run(A p1, B p2, C p3, D p4) {
+	public Z run(Object p1, Object p2, Object p3, Object p4) {
 		return run(new Object[]{p1, p2, p3 ,p4});
 	}
 	@Original
-	public Z run(A p1, B p2, C p3, D p4, E p5) {
+	public Z run(Object p1, Object p2, Object p3, Object p4, Object p5) {
 		return run(new Object[]{p1, p2, p3 ,p4, p5});
 	}
 	@Original
-	public Z run(A p1, B p2, C p3, D p4, E p5, F p6) {
+	public Z run(Object p1, Object p2, Object p3, Object p4, Object p5, Object p6) {
 		return run(new Object[]{p1, p2, p3 ,p4, p5, p6});
 	}
 	@Original
@@ -111,7 +109,7 @@ public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z
 	}
 
 	@SuppressWarnings("unchecked")
-	public Closure0<Z> toClosure0() {
+	public Closure0 toClosure0() {
 		Closure0 closure = new AbstractClosure0(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
@@ -125,7 +123,7 @@ public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z
 
 	//wrapper methods
 	@SuppressWarnings("unchecked")
-	public Closure1<Z, A> toClosure1() {
+	public Closure1 toClosure1() {
 		Closure1 closure = new AbstractClosure1(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
@@ -138,7 +136,7 @@ public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z
 	}
 
 	@SuppressWarnings("unchecked")
-	public Closure2<Z, A,B> toClosure2() {
+	public Closure2 toClosure2() {
 		Closure2 closure = new AbstractClosure2(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
@@ -150,7 +148,7 @@ public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z
 		return closure;
 	}
 	@SuppressWarnings("unchecked")
-	public Closure3<Z, A,B,C> toClosure3() {
+	public Closure3 toClosure3() {
 		Closure3 closure = new AbstractClosure3(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
@@ -162,7 +160,7 @@ public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z
 		return closure;
 	}
 	@SuppressWarnings("unchecked")
-	public Closure4<Z, A,B,C,D> toClosure4() {
+	public Closure4 toClosure4() {
 		Closure4 closure = new AbstractClosure4(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
@@ -175,7 +173,7 @@ public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z
 	}
 
 	@SuppressWarnings("unchecked")
-	public Closure5<Z, A,B,C,D,E> toClosure5() {
+	public Closure5 toClosure5() {
 		Closure5 closure = new AbstractClosure5(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
@@ -188,7 +186,7 @@ public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z
 	}
 
 	@SuppressWarnings("unchecked")
-	public Closure6<Z, A,B,C,D,E,F> toClosure6() {
+	public Closure6 toClosure6() {
 		Closure6 closure = new AbstractClosure6(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 

@@ -11,8 +11,11 @@
 package unquietcode.stately.closure;
 
 import com.googlecode.gentyref.GenericTypeReflector;
+import unquietcode.stately.closure.view.ClosureView;
+import unquietcode.stately.closure.view.ClosureViewBase;
 
 import java.lang.reflect.*;
+import java.util.Arrays;
 
 /**
  * @author  Benjamin Fagin
@@ -59,14 +62,19 @@ abstract class ClosureBase<Z> {
 		}
 	}
 
-	protected final boolean isWrapped() {
+	protected final Object[] getArguments() {
+		return Arrays.copyOf(arguments, arguments.length);
+	}
+
+
+	public final boolean isWrapped() {
 		return wrapped;
 	}
 
 	@SuppressWarnings("unchecked")
 	public final void curry(int var, Object replacement) {
-		ClosureBase closure = wrapped ? (ClosureBase) this.arg(1) : this;
 		var -= 1;
+		ClosureBase closure = wrapped ? (ClosureBase) this.arg(1) : this;
 		Field f[] = closure.getClass().getDeclaredFields();
 
 		if (var >= f.length) {
@@ -117,8 +125,9 @@ abstract class ClosureBase<Z> {
 		return classes;
 	}
 
-	public abstract Closure<Z> toClosure();
+	public abstract ClosureView<Z> toClosure();
 	public abstract Class[] getArgumentTypes();
+//	public abstract <T extends ClosureViewBase<Z>> T getView();
 
 	//TODO generate a "signature" version of the argument types array
 }

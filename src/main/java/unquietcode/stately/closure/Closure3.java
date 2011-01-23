@@ -5,6 +5,5 @@ package unquietcode.stately.closure;
  * @version 01-23-2011
  */
 public interface Closure3<Z, A,B,C> extends ClosureInterfaceBase<Z> {
-	void curry(int var, Object replacement);
-	Class[] getArgumentTypes();
+	Z run(A p1, B p2, C p3);
 }

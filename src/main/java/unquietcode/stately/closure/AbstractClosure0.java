@@ -32,7 +32,6 @@ public abstract class AbstractClosure0<Z> extends ClosureBase<Z> implements Clos
 		AbstractClosure closure = new AbstractClosure(base) {
 			AbstractClosure0 c0 = (AbstractClosure0) arg(1);
 
-			@Override
 			public Z run(Object...args) {
 				return (Z) c0.run();
 			}
