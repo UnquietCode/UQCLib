@@ -1,45 +1,9 @@
-/*
- * Copyright $YEAR$ Benjamin Fagin
- *
- * This work is licensed under the Common Development and Distribution License (CDDL), Version 1.0
- *
- * Read the included LICENSE.TXT for more information.
- *
- * --------------------------------------------------------------------
- */
-
 package unquietcode.stately.closure;
 
 /**
  * @author Benjamin Fagin
- * Date: Dec 10, 2010
+ * @version 01-23-2011
  */
-public abstract class Closure4<Z, A,B,C,D> extends ClosureBase<Z> {
-	public abstract Z run(A p1, B p2, C p3, D p4);
-
-	public Closure4(Object...args) {
-		super(args);
-	}
-
-	public final Class[] getArgumentTypes() {
-		return this.getArgumentTypes(Closure4.class);
-	}
-
-	@SuppressWarnings("unchecked")
-	public final Closure<Z> toClosure() {
-		ClosureBase base = wrapped ? (ClosureBase) this.arg(1) : this;
-
-		Closure closure = new Closure(this) {
-			Closure4 c4 = (Closure4) arg(1);
-
-			@Override
-			public Z run(Object...args) {
-				return (Z) c4.run(args[0], args[1], args[2], args[3]);
-			}
-		};
-
-		closure.wrapped = true;
-		closure.setExpectedArgs(4);
-		return closure;
-	}
+public interface Closure4<Z, A,B,C,D> extends ClosureInterfaceBase<Z> {
+	Z run(A p1, B p2, C p3, D p4);
 }

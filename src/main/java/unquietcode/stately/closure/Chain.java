@@ -1,7 +1,5 @@
 package unquietcode.stately.closure;
 
-import org.junit.Assert;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,19 +14,19 @@ import java.util.List;
  * @version 12-31-2010
  */
 public class Chain<Z> {
-	List<Closure> chain = new LinkedList<Closure>();
+	List<AbstractClosure> chain = new LinkedList<AbstractClosure>();
 
 
-	Chain(Closure...closures) {
-		for (Closure c : closures) {
+	Chain(AbstractClosure...closures) {
+		for (AbstractClosure c : closures) {
 			if (c == null) { throw new IllegalArgumentException("Closures must be non-null to form a chain."); }
 			chain.add(c);
 		}
 	}
 
 
-	public Chain prepend(Closure...closures) {
-		for (Closure c: closures) {
+	public Chain prepend(AbstractClosure...closures) {
+		for (AbstractClosure c: closures) {
 			if (c == null) {
 				throw new IllegalArgumentException("Closures must be non-null to attach to a chain.");
 			}
@@ -40,8 +38,8 @@ public class Chain<Z> {
 		return this;
 	}
 
-	public Chain append(Closure...closures) {
-		for (Closure c: closures) {
+	public Chain append(AbstractClosure...closures) {
+		for (AbstractClosure c: closures) {
 			if (c == null) {
 				throw new IllegalArgumentException("Closures must be non-null to attach to a chain.");
 			}

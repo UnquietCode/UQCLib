@@ -29,7 +29,7 @@ public class ClosureFeatures_T {
 		int X = 10;                     // not accessible, but can still be passed in
 		final int dummyX = X;           // this will provide alternative access inside
 
-		Closure1<Integer, Integer> adder = new Closure1<Integer, Integer>(X) {  // <-passing in a variable
+		AbstractClosure1<Integer, Integer> adder = new AbstractClosure1<Integer, Integer>(X) {  // <-passing in a variable
 			int x = this.<Integer>a1(); // will have to use this somtimes for some compilers
 			int y = (Integer) a1();	    // this will work all of the time
 			Integer z = a1();           // how it should always work, ideally
@@ -67,10 +67,10 @@ public class ClosureFeatures_T {
 		// Closures can return other closures too, of course.
 		// Here we create a closure that acts as a factory of adders.
 
-		Closure1<Closure1<Integer, Integer>, Integer> adderFactory = new Closure1<Closure1<Integer, Integer>, Integer>() {
+		AbstractClosure1<AbstractClosure1<Integer, Integer>, Integer> adderFactory = new AbstractClosure1<AbstractClosure1<Integer, Integer>, Integer>() {
 
-			public Closure1<Integer, Integer> run(Integer p1) {
-				Closure1<Integer, Integer> generated = new Closure1<Integer, Integer>(p1) {
+			public AbstractClosure1<Integer, Integer> run(Integer p1) {
+				AbstractClosure1<Integer, Integer> generated = new AbstractClosure1<Integer, Integer>(p1) {
 
 					Integer base = a1();
 
@@ -84,9 +84,9 @@ public class ClosureFeatures_T {
 		};
 
 		// get a few adders and try them out
-		Closure1<Integer, Integer> add10 = adderFactory.run(10);
-		Closure1<Integer, Integer> add5 = adderFactory.run(5);
-		Closure1<Integer, Integer> sub1 = adderFactory.run(-1);
+		AbstractClosure1<Integer, Integer> add10 = adderFactory.run(10);
+		AbstractClosure1<Integer, Integer> add5 = adderFactory.run(5);
+		AbstractClosure1<Integer, Integer> sub1 = adderFactory.run(-1);
 
 		int test = 50;
 		out(add10.run(test));   // 60
@@ -99,10 +99,10 @@ public class ClosureFeatures_T {
 		// Only the return type needs to be specified, if you're willing to keep track
 		// of the necessary number of inputs and their types.
 
-		Closure<Closure> adderFactory = new Closure<Closure>() {
+		AbstractClosure<AbstractClosure> adderFactory = new AbstractClosure<AbstractClosure>() {
 
-			public Closure run(Object...args) {
-				return new Closure<Integer>(args[0]) {
+			public AbstractClosure run(Object...args) {
+				return new AbstractClosure<Integer>(args[0]) {
 					Integer base = a1();    // this is optional, since a1() can be used directly
 
 					public Integer run(Object...args) {
@@ -113,9 +113,9 @@ public class ClosureFeatures_T {
 		};
 
 		// get a few adders and try them out
-		Closure add10 = adderFactory.run(10);
-		Closure add5 = adderFactory.run(5);
-		Closure sub1 = adderFactory.run(-1);
+		AbstractClosure add10 = adderFactory.run(10);
+		AbstractClosure add5 = adderFactory.run(5);
+		AbstractClosure sub1 = adderFactory.run(-1);
 
 		// you are responsible for passing in the correct number and types of arguments
 		int test = 50;
@@ -130,12 +130,12 @@ public class ClosureFeatures_T {
 		// As in other places, indexing is 1-based.
 		// We'll again use the adderFactory example to demonstrate this feature.
 
-		Closure1<Closure1<Integer, Integer>, Integer> adderFactory = new Closure1<Closure1<Integer, Integer>, Integer>() {
+		AbstractClosure1<AbstractClosure1<Integer, Integer>, Integer> adderFactory = new AbstractClosure1<AbstractClosure1<Integer, Integer>, Integer>() {
 			int declaredValue1 = 1;     // factory variable #1
 			int declaredValue2 = 10;    // factory variable #2
 
-			public Closure1<Integer, Integer> run(Integer p1) {
-				return new Closure1<Integer, Integer>(p1) {
+			public AbstractClosure1<Integer, Integer> run(Integer p1) {
+				return new AbstractClosure1<Integer, Integer>(p1) {
 					Integer declaredValue3 = a1();  // adder variable #1
 					
 					public @Override Integer run(Integer p1) {
@@ -147,7 +147,7 @@ public class ClosureFeatures_T {
 		};
 
 		// normal
-		Closure1 tarragon = adderFactory.run(100);  // will add 1 + 10 + 100 + x
+		AbstractClosure1 tarragon = adderFactory.run(100);  // will add 1 + 10 + 100 + x
 		out(tarragon.run(5));                       // which gives us 116
 
 		// The returned adder has 1 field, declaredValue3, that we can modify
@@ -157,7 +157,7 @@ public class ClosureFeatures_T {
 		// we can change the factory too, though
 		adderFactory.curry(1, 15);
 		adderFactory.curry(2, 20);
-		Closure1 cardamom = adderFactory.run(100);  // will add 15 + 20 + 100 + x
+		AbstractClosure1 cardamom = adderFactory.run(100);  // will add 15 + 20 + 100 + x
 		out(cardamom.run(5));                       // which gives us 140
 	}
 
@@ -166,7 +166,7 @@ public class ClosureFeatures_T {
 		// Call a method from within the closure.
 
 		String string = "The way I used to be";
-		Closure1<String, String> closure = new Closure1<String,String>(string) {
+		AbstractClosure1<String, String> closure = new AbstractClosure1<String,String>(string) {
 
 			public String run(String a1) {
 				return modify(a1) + ".";    // If it's visible to the closure, it can be run.
@@ -193,7 +193,7 @@ public class ClosureFeatures_T {
 		map.put(0, 'A');
 		map.put(1, 'B');
 
-		Closure<Integer> encoder = new Closure<Integer>(map) {
+		AbstractClosure<Integer> encoder = new AbstractClosure<Integer>(map) {
 
 			public Integer run(Object...args) {
 				char x = ((Map<Integer, Character>)a1()).get(0);
@@ -214,7 +214,7 @@ public class ClosureFeatures_T {
 		// However, the initial values can be stored in the intializer section of the closure.
 
 		char array[] = {'D', 'E'};
-		Closure<Integer> encoder2 = new Closure<Integer>(array) {
+		AbstractClosure<Integer> encoder2 = new AbstractClosure<Integer>(array) {
 			char x = ((char[])a1())[0];
 			char y = ((char[])a1())[1];
 
@@ -236,7 +236,7 @@ public class ClosureFeatures_T {
 		// Because these are anonymous classes, you can add in whatever methods you want.
 		// They will not be accessible outside of the closure (without reflection, of course).
 
-		Closure theDestroyer = new Closure() {
+		AbstractClosure theDestroyer = new AbstractClosure() {
 			Random gen = new Random();
 
 			public Object run(Object...args) {
@@ -276,7 +276,7 @@ public class ClosureFeatures_T {
 	@Test
 	public void getArgumentTypes() {
 		Integer num = 20;
-		Closure closure = new Closure(1, 'a', num) {
+		AbstractClosure closure = new AbstractClosure(1, 'a', num) {
 
 			public Object run(Object...args) {
 				return null;

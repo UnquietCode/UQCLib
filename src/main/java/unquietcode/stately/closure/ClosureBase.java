@@ -22,7 +22,7 @@ abstract class ClosureBase<Z> {
 	private Object arguments[];
 	boolean wrapped = false;
 
-	protected ClosureBase(Object...args) {
+	protected ClosureBase(Object... args) {
 		if (args == null)
 			arguments = new Object[] {null};
 		else
@@ -101,7 +101,7 @@ abstract class ClosureBase<Z> {
 	}
 
 	//TODO move this out so that it's not accessible to users (what should the params be?)
-	final <T extends ClosureBase> Class[] getArgumentTypes(Class<T> clazz) {
+	protected final <T extends ClosureBase> Class[] getArgumentTypes(Class<T> clazz) {
 		Type baseType = GenericTypeReflector.getExactSuperType((Type) this.getClass(), clazz);
 
 		if (baseType instanceof Class<?>) {

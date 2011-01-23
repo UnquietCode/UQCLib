@@ -22,7 +22,7 @@ import static unquietcode.util.Shortcuts.*;
 public class ClosureInheritanceTest {
 	@Test
 	public void basic() {
-		Closure2<Integer, Integer, Integer> mixer = new Closure2<Integer, Integer, Integer>() {
+		AbstractClosure2<Integer, Integer, Integer> mixer = new AbstractClosure2<Integer, Integer, Integer>() {
 			int x = 10;
 
 
@@ -32,7 +32,7 @@ public class ClosureInheritanceTest {
 			}
 		};
 
-		Closure c = mixer.toClosure();
+		AbstractClosure c = mixer.toClosure();
 		out("expects " + c.getExpectedArgs() + " arguments");
 		out("types are ");
 		for (Class clazz : mixer.getArgumentTypes()) {
@@ -43,7 +43,7 @@ public class ClosureInheritanceTest {
 		try {
 			out(c.run(20, 30)); // 40
 		//	out(c.run(1));      // fail!
-		} catch (Closure.ClosureException ex) {
+		} catch (AbstractClosure.ClosureException ex) {
 			err(ex.getMessage());
 			die(10);
 		}

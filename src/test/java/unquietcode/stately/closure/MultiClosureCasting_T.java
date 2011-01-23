@@ -22,8 +22,8 @@ import static unquietcode.util.Shortcuts.out;
 public class MultiClosureCasting_T {
 	@Test
 	public void downcast() {
-		MultiClosure<String, String, String, Void, Void, Void, Void> helloMaker =
-		new MultiClosure<String, String, String, Void, Void, Void, Void>() {
+		AbstractMultiClosure<String, String, String, Void, Void, Void, Void> helloMaker =
+		new AbstractMultiClosure<String, String, String, Void, Void, Void, Void>() {
 
 			@Override public String run(String p1) {
 				return "hello " + p1;
@@ -56,23 +56,23 @@ public class MultiClosureCasting_T {
 		out();
 
 		// We can try to get a more constrained versions of our helloMaker
-		Closure1<String, String> singles = helloMaker.getClosure1();
+		AbstractClosure1<String, String> singles = helloMaker.getClosure1();
 		out(singles.run("Steven"));
 
 		// Of course, you don't have to type them if you don't want to.
-		Closure2 doubles = helloMaker.getClosure2();
+		AbstractClosure2 doubles = helloMaker.getClosure2();
 		out(doubles.run("Tabitha", "Aragorn"));
 
 		//we didn't define a 3 argument version, but we did define a vararg, so it will work
-		Closure3<String, String, String, String> fallback = helloMaker.getClosure3();
+		AbstractClosure3<String, String, String, String> fallback = helloMaker.getClosure3();
 		out(fallback.run("Arnold", "Julie", "Marissa"));
 		//however, if we did not define a vararg version, we would have gotten an exception at runtime
 	}
 
 	@Test
 	public void mcTest() {
-		MultiClosure<String, String, String, Void, Void, Void, Void> helloMaker =
-		new MultiClosure<String, String, String, Void, Void, Void, Void>() {
+		AbstractMultiClosure<String, String, String, Void, Void, Void, Void> helloMaker =
+		new AbstractMultiClosure<String, String, String, Void, Void, Void, Void>() {
 
 			@Override public String run(String p1) {
 				this.wrapped = false; //TODO this is a problem

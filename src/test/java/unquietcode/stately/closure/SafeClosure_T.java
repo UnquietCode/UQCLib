@@ -9,6 +9,7 @@ import static unquietcode.util.Shortcuts.out;
  * @version 01-22-2011
  */
 public class SafeClosure_T {
+/*
 	@Test
 	public void basicTest() {
 		SafeClosure2 c2 = new Closure2() {
@@ -39,5 +40,6 @@ public class SafeClosure_T {
 		c2.curry(1, "world!");		// Goodbye world!
 	}
 
+*/
 
 }
