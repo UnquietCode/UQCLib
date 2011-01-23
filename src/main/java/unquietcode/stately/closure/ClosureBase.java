@@ -10,7 +10,9 @@
 
 package unquietcode.stately.closure;
 
-import java.lang.reflect.Field;
+import com.googlecode.gentyref.GenericTypeReflector;
+
+import java.lang.reflect.*;
 
 /**
  * @author  Benjamin Fagin
@@ -63,23 +65,16 @@ abstract class ClosureBase<Z> {
 	}
 
 
-	public final  Class[] getArgumentTypes() {
-		// get the array of passed in arguments
-		Class retval[] = new Class[arguments.length];
-
-		for (int i=0; i < arguments.length; ++i)
-			retval[i] = arguments[i].getClass();
-
-		return retval;
-	}
-
 	@SuppressWarnings("unchecked")
 	public final void curry(int var, Object replacement) {
 		ClosureBase closure = wrapped ? (ClosureBase) this.arg(1) : this;
 		var -= 1;
 		Field f[] = closure.getClass().getDeclaredFields();
 
-		//proper number of fields
+		//Q?proper number of fields
+
+		//TODO what to do?
+						//ALARM what the fuck!?
 		if (var >= f.length) {
 			throw new ClosureException("invalid field ("+ (var+1) +")");
 		}
@@ -87,7 +82,7 @@ abstract class ClosureBase<Z> {
 		Field field = f[var];
 		String name = field.getName();
 
-		//TODO this might be compiler independant, so need a better way!
+		//TODO this might be compiler dependant, so need a better way!
 		if (name.replaceAll("^this\\$[0-9]+", "").equals("")) {
 			throw new ClosureException("invalid field ("+ (var+1) +")");
 		}
@@ -105,6 +100,30 @@ abstract class ClosureBase<Z> {
 		}
 	}
 
+	//TODO move this out so that it's not accessible to users (what should the params be?)
+	final <T extends ClosureBase> Class[] getArgumentTypes(Class<T> clazz) {
+		Type baseType = GenericTypeReflector.getExactSuperType((Type) this.getClass(), clazz);
+
+		if (baseType instanceof Class<?>) {
+			// raw class, type parameters not known
+			return new Class[]{};
+		}
+
+		ParameterizedType pBaseType = (ParameterizedType) baseType;
+		Type types[] = pBaseType.getActualTypeArguments();
+
+		if (types.length <= 1) {
+			return new Class[]{};
+		}
+
+		Class classes[] = new Class[types.length-1];
+		for (int i=1; i < types.length; ++i) {
+			classes[i-1] = (Class) types[i];
+		}
+
+		return classes;
+	}
+
 	public static class ClosureException extends RuntimeException {
 		public ClosureException(String message) {
 			super(message);
@@ -116,5 +135,8 @@ abstract class ClosureBase<Z> {
 	}
 
 	public abstract Closure<Z> toClosure();
+	public abstract Class[] getArgumentTypes();
+
 	//public abstract MultiClosure<Z> toMultiClosure(); //todo how to do type params
+	//TODO generate a "signature" version of the argument types array
 }

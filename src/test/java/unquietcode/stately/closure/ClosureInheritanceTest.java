@@ -20,56 +20,32 @@ import static unquietcode.util.Shortcuts.*;
  * Date:    Dec 10, 2010
  */
 public class ClosureInheritanceTest {
-	/*@Test
+	@Test
 	public void basic() {
 		Closure2<Integer, Integer, Integer> mixer = new Closure2<Integer, Integer, Integer>() {
 			int x = 10;
 
-			@Override
+
+
 			public Integer run(Integer v1, Integer v2) {
 				return v1 + v2 - x;
 			}
 		};
 
-		//for (Class z : mixer.getArgumentTypes()) {
-		//	out(z.getName());
-//		}
+		Closure c = mixer.toClosure();
+		out("expects " + c.getExpectedArgs() + " arguments");
+		out("types are ");
+		for (Class clazz : mixer.getArgumentTypes()) {
+			outN(clazz.getName());
+		}
+		out("\n");
 
-		Closure c = mixer;
 		try {
-			out(c.Run(1, 2));
-			out(c.Run(1));
+			out(c.run(20, 30)); // 40
+		//	out(c.run(1));      // fail!
 		} catch (Closure.ClosureException ex) {
 			err(ex.getMessage());
 			die(10);
 		}
-	}
-*/
-
-	private <T> void genclass(T...classes) {
-		//for (T x :)
-	}
-
-
-	@SuppressWarnings("unchecked")
-	@Test
-	public void noArgCastTest() {
-		int X = 10;
-
-		Closure1<Integer, Integer> adder = new Closure1<Integer, Integer>(X) {
-			int x = this.<Integer>a1(); //if primitive or null, will have to use this for some compilers
-			Integer X = a1();   //ok
-			int z = (Integer) a1();
-			int y = 10;
-			//int x = 10;
-			
-			@Override
-			public Integer run(Integer v1) {
-				return v1 + x;
-			}
-		};
-
-
-		out(adder.run(10));
 	}
 }

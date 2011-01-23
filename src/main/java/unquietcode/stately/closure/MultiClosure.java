@@ -59,7 +59,11 @@ public abstract class MultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> {
 			isImplemented[i] |= isImplemented[MAX_PARAMS];*/
 
 	}
-	
+
+	public final Class[] getArgumentTypes() {
+		return this.getArgumentTypes(MultiClosure.class);
+	}
+
 	@Retention(RetentionPolicy.RUNTIME)
 	private @interface Original { }
 

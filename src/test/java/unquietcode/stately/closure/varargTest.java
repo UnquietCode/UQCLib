@@ -13,9 +13,8 @@ package unquietcode.stately.closure;
 import org.junit.Test;
 
 /**
- * @author Ben
- * @version 0.1
- *          Date: Dec 10, 2010
+ * @author  Benjamin Fagin
+ * @version Dec 10, 2010
  */
 public class varargTest {
 	@Test
@@ -35,6 +34,17 @@ public class varargTest {
 		System.out.println(whoGetsIt(new Object[] {}));
 	}
 
+	private String tryit(Object...args) {
+		return args.length + "";
+	}
+
+	private String catchNull(Object...args) {
+		if (args == null)
+			return 1 + " (null)";
+		else
+			return args.length + "";
+	}
+
 	private String whoGetsIt() {
 		return "empty";
 	}
@@ -43,15 +53,4 @@ public class varargTest {
 		return "varags";
 	}
 
-
-	private String tryit(Object...args) {
-		return args.length + "";
-	}
-
-	private String catchNull(Object...args) {
-		if (args == null)
-			return 1 + "";
-		else
-			return args.length + "";
-	}
 }

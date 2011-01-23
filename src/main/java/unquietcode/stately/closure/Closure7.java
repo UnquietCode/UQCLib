@@ -22,8 +22,12 @@ public abstract class Closure7<Z, A,B,C,D,E,F,G> extends ClosureBase<Z> {
 		super(args);
 	}
 
+	public final Class[] getArgumentTypes() {
+		return this.getArgumentTypes(Closure7.class);
+	}
+
 	@SuppressWarnings("unchecked")
-	public Closure<Z> toClosure() {
+	public final Closure<Z> toClosure() {
 		ClosureBase base = wrapped ? (ClosureBase) this.arg(1) : this;
 
 		Closure closure = new Closure(base) {

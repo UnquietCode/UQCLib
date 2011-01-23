@@ -20,9 +20,13 @@ public abstract class Closure0<Z> extends ClosureBase<Z> {
 	public Closure0(Object...args) {
 		super(args);
 	}
-	
+
+	public final Class[] getArgumentTypes() {
+		return new Class[0];
+	}
+
 	@SuppressWarnings("unchecked")
-	public Closure<Z> toClosure() {
+	public final Closure<Z> toClosure() {
 		ClosureBase base = wrapped ? (ClosureBase) this.arg(1) : this;
 
 		Closure closure = new Closure(base) {
