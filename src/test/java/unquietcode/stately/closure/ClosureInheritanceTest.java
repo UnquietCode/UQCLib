@@ -43,7 +43,7 @@ public class ClosureInheritanceTest {
 		try {
 			out(c.run(20, 30)); // 40
 		//	out(c.run(1));      // fail!
-		} catch (AbstractClosure.ClosureException ex) {
+		} catch (ClosureException ex) {
 			err(ex.getMessage());
 			die(10);
 		}

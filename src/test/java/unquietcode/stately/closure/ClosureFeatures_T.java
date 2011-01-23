@@ -163,6 +163,27 @@ public class ClosureFeatures_T {
 	}
 
 	@Test
+	public void simpleCurryExample() {
+		Closure1<String, String> c1 = new AbstractClosure1<String, String>() {
+			String greeting = "Hello";
+			char ending = '.';
+
+			public String run(String p1) {
+				return greeting + " " + p1 + ending;
+			}
+		};
+
+		// normal
+		String name = "world";
+		out(c1.run(name));      // Hello world.
+
+		// curried
+		c1.curry(1, "Goodbye");
+		c1.curry(2, '!');
+		out(c1.run(name));      // Goodbye world!
+	}
+
+	@Test
 	public void methodCallingTest() {
 		// Call a method from within the closure.
 

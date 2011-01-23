@@ -120,15 +120,5 @@ abstract class ClosureBase<Z> {
 	public abstract Closure<Z> toClosure();
 	public abstract Class[] getArgumentTypes();
 
-	public static class ClosureException extends RuntimeException {
-		public ClosureException(String message) {
-			super(message);
-		}
-
-		public ClosureException(String message, Throwable ex) {
-			super(message, ex);
-		}
-	}
-
 	//TODO generate a "signature" version of the argument types array
 }

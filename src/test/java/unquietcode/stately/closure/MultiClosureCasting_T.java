@@ -19,6 +19,7 @@ import static unquietcode.util.Shortcuts.out;
  * @author  Benjamin Fagin
  * @version Dec 11, 2010
  */
+//TODO finish work on this
 public class MultiClosureCasting_T {
 /*
 	@Test
