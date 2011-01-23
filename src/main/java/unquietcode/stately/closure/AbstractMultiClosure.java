@@ -23,9 +23,11 @@ import java.util.Map;
  * @version Dec 10, 2010
  */
 public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z> implements MultiClosure<Z, A,B,C,D,E,F> {
-	private static final int MAX_PARAMS = 6;                //for now, it's set at 6
-	boolean isImplemented[] = new boolean[MAX_PARAMS+2];  //0-6, and then 7 is vararg
+	private static final int MAX_PARAMS = 6;                // for now, it's set at 6
+	boolean isImplemented[] = new boolean[MAX_PARAMS+2];    // 0-6, and then 7 is vararg
 
+	@Retention(RetentionPolicy.RUNTIME)
+	private @interface Original { }
 
 	public AbstractMultiClosure(Object... args) {
 		super(args);
@@ -52,20 +54,14 @@ public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z
 			}
 		}
 
-		//method order isn't guarenteed, so afterwards make sure we know what's actually possible
+		//method order isn't guaranteed, so afterwards make sure we know what's actually possible
 		//also note though that this is just what's possible, so not what are actually overridded. Maybe better to
 		//preserve that elsewhere
 		/*for (int i=0; i <= MAX_PARAMS; ++i)
 			isImplemented[i] |= isImplemented[MAX_PARAMS];*/
+		//TODO ...what?
 
 	}
-
-	public final Class[] getArgumentTypes() {
-		return this.getArgumentTypes(AbstractMultiClosure.class);
-	}
-
-	@Retention(RetentionPolicy.RUNTIME)
-	private @interface Original { }
 
 	@Original
 	public Z run() {
@@ -110,13 +106,15 @@ public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z
 		return isImplemented[x] || isImplemented[MAX_PARAMS+1];
 	}
 
-	//TODO will this work better, easier?
+	public final Class[] getArgumentTypes() {
+		return super.getArgumentTypes(AbstractMultiClosure.class);
+	}
+
 	@SuppressWarnings("unchecked")
-	public <T> Closure0<T> getClosure0() {
+	public Closure0<Z> toClosure0() {
 		Closure0 closure = new AbstractClosure0(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
-			@Override
 			public Object run() {
 				return mc.run();
 			}
@@ -127,122 +125,86 @@ public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z
 
 	//wrapper methods
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractClosure1> T getClosure1() {
-		AbstractClosure1 closure = new AbstractClosure1(this) {
+	public Closure1<Z, A> toClosure1() {
+		Closure1 closure = new AbstractClosure1(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
-			@Override
 			public Object run(Object p1) {
 				return mc.run(p1);
 			}
 		};
 
-		return (T) closure;
+		return closure;
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractClosure2> T getClosure2() {
-		AbstractClosure2 closure = new AbstractClosure2(this) {
+	public Closure2<Z, A,B> toClosure2() {
+		Closure2 closure = new AbstractClosure2(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
-			@Override
 			public Object run(Object p1, Object p2) {
 				return mc.run(p1, p2);
 			}
 		};
 
-		return (T) closure;
+		return closure;
 	}
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractClosure3> T getClosure3() {
-		AbstractClosure3 closure = new AbstractClosure3(this) {
+	public Closure3<Z, A,B,C> toClosure3() {
+		Closure3 closure = new AbstractClosure3(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
-			@Override
 			public Object run(Object p1, Object p2, Object p3) {
 				return mc.run(p1, p2, p3);
 			}
 		};
 
-		return (T) closure;
+		return closure;
 	}
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractClosure4> T getClosure4() {
-		AbstractClosure4 closure = new AbstractClosure4(this) {
+	public Closure4<Z, A,B,C,D> toClosure4() {
+		Closure4 closure = new AbstractClosure4(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
-			@Override
 			public Object run(Object p1, Object p2, Object p3, Object p4) {
 				return mc.run(p1, p2, p3, p4);
 			}
 		};
 
-		return (T) closure;
+		return closure;
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractClosure5> T getClosure5() {
-		AbstractClosure5 closure = new AbstractClosure5(this) {
+	public Closure5<Z, A,B,C,D,E> toClosure5() {
+		Closure5 closure = new AbstractClosure5(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
-			@Override
 			public Object run(Object p1, Object p2, Object p3, Object p4, Object p5) {
 				return mc.run(p1, p2, p3, p4, p5);
 			}
 		};
 
-		return (T) closure;
+		return closure;
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractClosure6> T getClosure6() {
-		AbstractClosure6 closure = new AbstractClosure6(this) {
+	public Closure6<Z, A,B,C,D,E,F> toClosure6() {
+		Closure6 closure = new AbstractClosure6(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
-			@Override
 			public Object run(Object p1, Object p2, Object p3, Object p4, Object p5, Object p6) {
 				return mc.run(p1, p2, p3, p4, p5, p6);
 			}
 		};
 
-		return (T) closure;
+		return closure;
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractClosure7> T getClosure7() {
-		AbstractClosure7 closure = new AbstractClosure7(this) {
+	public Closure<Z> toClosure() {
+		Closure closure = new AbstractClosure(this) {
 			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
-			@Override
-			public Object run(Object p1, Object p2, Object p3, Object p4, Object p5, Object p6, Object p7) {
-				return mc.run(p1, p2, p3, p4, p5, p6, p7); // this is the varargs method
-			}
-		};
-
-		return (T) closure;
-	}
-
-	@SuppressWarnings("unchecked")
-	public <T extends AbstractClosure8> T getClosure8() {
-		AbstractClosure8 closure = new AbstractClosure8(this) {
-			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
-
-			@Override
-			public Object run(Object p1, Object p2, Object p3, Object p4, Object p5, Object p6, Object p7, Object p8) {
-				return mc.run(p1, p2, p3, p4, p5, p6, p7, p8);  //this is the varargs method
-			}
-		};
-
-		return (T) closure;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public AbstractClosure<Z> toClosure() {
-		AbstractClosure closure = new AbstractClosure(this) {
-			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
-
-			@Override
 			public Object run(Object...params) {
 				return mc.run(params);
 			}
@@ -251,7 +213,8 @@ public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z
 		return closure;
 	}
 
-	public <T extends AbstractMultiClosure, U extends ClosureBase> T makeMultiClosure(U...closures) {
+/*	//TODO maybe a future idea, not feeling it now
+	public static <z, a extends ,b,c,d,e,f> MultiClosure<z, a,b,c,d,e,f> makeMultiClosure(U...closures) {
 		// need to find out if more than one type of closure is present
 		Map<Integer, AbstractClosure> map = new HashMap<Integer, AbstractClosure>();
 
@@ -259,7 +222,6 @@ public abstract class AbstractMultiClosure<Z, A,B,C,D,E,F> extends ClosureBase<Z
 			//if c.
 		}
 
-
 		return null;
-	}
+	}*/
 }

@@ -11,8 +11,8 @@
 package unquietcode.stately.closure;
 
 /**
- * @author Benjamin Fagin
- * Date: Dec 10, 2010
+ * @author  Benjamin Fagin
+ * @version  Dec 10, 2010
  */
 public abstract class AbstractClosure8<Z, A,B,C,D,E,F,G,H> extends ClosureBase<Z> implements Closure8<Z, A,B,C,D,E,F,G,H> {
 	public abstract Z run(A p1, B p2, C p3, D p4, E p5, F p6, G p7, H p8);
@@ -23,7 +23,7 @@ public abstract class AbstractClosure8<Z, A,B,C,D,E,F,G,H> extends ClosureBase<Z
 	}
 
 	public final Class[] getArgumentTypes() {
-		return this.getArgumentTypes(AbstractClosure8.class);
+		return super.getArgumentTypes(AbstractClosure8.class);
 	}
 
 	@SuppressWarnings("unchecked")

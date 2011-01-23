@@ -20,6 +20,7 @@ import static unquietcode.util.Shortcuts.out;
  * @version Dec 11, 2010
  */
 public class MultiClosureCasting_T {
+/*
 	@Test
 	public void downcast() {
 		AbstractMultiClosure<String, String, String, Void, Void, Void, Void> helloMaker =
@@ -90,6 +91,7 @@ public class MultiClosureCasting_T {
 
 		//helloMaker.run(1,2,3,4,5); //exception test
 	}
+*/
 
 
 }

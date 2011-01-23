@@ -20,7 +20,7 @@ public abstract class AbstractClosure<Z> extends ClosureBase<Z> implements Closu
 	}
 
 	public final Class[] getArgumentTypes() {
-		return this.getArgumentTypes(AbstractClosure.class);
+		return super.getArgumentTypes(AbstractClosure.class);
 	}
 
 	public AbstractClosure(Object...args) {

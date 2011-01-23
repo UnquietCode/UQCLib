@@ -22,7 +22,7 @@ public abstract class AbstractClosure2<Z, A,B> extends ClosureBase<Z> implements
 	}
 
 	public final Class[] getArgumentTypes() {
-		return this.getArgumentTypes(AbstractClosure2.class);
+		return super.getArgumentTypes(AbstractClosure2.class);
 	}
 
 	public Void run(String hello, String world) {

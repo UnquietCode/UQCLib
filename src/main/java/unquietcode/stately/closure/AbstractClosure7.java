@@ -23,7 +23,7 @@ public abstract class AbstractClosure7<Z, A,B,C,D,E,F,G> extends ClosureBase<Z> 
 	}
 
 	public final Class[] getArgumentTypes() {
-		return this.getArgumentTypes(AbstractClosure7.class);
+		return super.getArgumentTypes(AbstractClosure7.class);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -22,7 +22,7 @@ public abstract class AbstractClosure6<Z, A,B,C,D,E,F> extends ClosureBase<Z> im
 	}
 
 	public final Class[] getArgumentTypes() {
-		return this.getArgumentTypes(AbstractClosure6.class);
+		return super.getArgumentTypes(AbstractClosure6.class);
 	}
 
 	@SuppressWarnings("unchecked")

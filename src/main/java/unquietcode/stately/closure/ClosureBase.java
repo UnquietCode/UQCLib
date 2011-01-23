@@ -22,7 +22,7 @@ abstract class ClosureBase<Z> {
 	private Object arguments[];
 	boolean wrapped = false;
 
-	protected ClosureBase(Object... args) {
+	protected ClosureBase(Object...args) {
 		if (args == null)
 			arguments = new Object[] {null};
 		else
@@ -36,22 +36,22 @@ abstract class ClosureBase<Z> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public final <A> A a2() {
+	protected final <A> A a2() {
 		return (A) arg(2);
 	}
 
 	@SuppressWarnings("unchecked")
-	public final <A> A a3() {
+	protected final <A> A a3() {
 		return (A) arg(3);
 	}
 
 	@SuppressWarnings("unchecked")
-	public final <A> A a4() {
+	protected final <A> A a4() {
 		return (A) arg(4);
 	}
 
 	@SuppressWarnings("unchecked")
-	public final <A> A arg(int var) {
+	protected final <A> A arg(int var) {
 		try {
 			return (A) arguments[--var];
 		} catch (ArrayIndexOutOfBoundsException ex) {
@@ -59,11 +59,9 @@ abstract class ClosureBase<Z> {
 		}
 	}
 
-
-	public final boolean isWrapped() {
+	protected final boolean isWrapped() {
 		return wrapped;
 	}
-
 
 	@SuppressWarnings("unchecked")
 	public final void curry(int var, Object replacement) {
@@ -71,10 +69,6 @@ abstract class ClosureBase<Z> {
 		var -= 1;
 		Field f[] = closure.getClass().getDeclaredFields();
 
-		//Q?proper number of fields
-
-		//TODO what to do?
-						//ALARM what the fuck!?
 		if (var >= f.length) {
 			throw new ClosureException("invalid field ("+ (var+1) +")");
 		}
@@ -100,7 +94,6 @@ abstract class ClosureBase<Z> {
 		}
 	}
 
-	//TODO move this out so that it's not accessible to users (what should the params be?)
 	protected final <T extends ClosureBase> Class[] getArgumentTypes(Class<T> clazz) {
 		Type baseType = GenericTypeReflector.getExactSuperType((Type) this.getClass(), clazz);
 
@@ -124,6 +117,9 @@ abstract class ClosureBase<Z> {
 		return classes;
 	}
 
+	public abstract Closure<Z> toClosure();
+	public abstract Class[] getArgumentTypes();
+
 	public static class ClosureException extends RuntimeException {
 		public ClosureException(String message) {
 			super(message);
@@ -134,9 +130,5 @@ abstract class ClosureBase<Z> {
 		}
 	}
 
-	public abstract Closure<Z> toClosure();
-	public abstract Class[] getArgumentTypes();
-
-	//public abstract MultiClosure<Z> toMultiClosure(); //todo how to do type params
 	//TODO generate a "signature" version of the argument types array
 }

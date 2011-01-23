@@ -23,7 +23,7 @@ public abstract class AbstractClosure1<Z, A> extends ClosureBase<Z> implements C
 	}
 
 	public final Class[] getArgumentTypes() {
-		return this.getArgumentTypes(AbstractClosure1.class);
+		return super.getArgumentTypes(AbstractClosure1.class);
 	}
 
 	@SuppressWarnings("unchecked")

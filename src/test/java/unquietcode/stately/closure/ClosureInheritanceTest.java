@@ -32,7 +32,7 @@ public class ClosureInheritanceTest {
 			}
 		};
 
-		AbstractClosure c = mixer.toClosure();
+		Closure c = mixer.toClosure();
 		out("expects " + c.getExpectedArgs() + " arguments");
 		out("types are ");
 		for (Class clazz : mixer.getArgumentTypes()) {
