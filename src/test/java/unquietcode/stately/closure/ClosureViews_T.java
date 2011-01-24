@@ -6,6 +6,9 @@ import unquietcode.stately.closure.view.Closure1View;
 import unquietcode.stately.closure.view.Closure2View;
 import unquietcode.stately.closure.view.ClosureView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static unquietcode.util.Shortcuts.out;
 import static unquietcode.util.Shortcuts.outN;
 
@@ -92,29 +95,94 @@ public class ClosureViews_T {
 		// Therefore it is best not to consider a view as immutable.
 
 		// Views will also reflect changes to mutable arguments in the original closure.
-		String greeting[] = {"Hello"};
+		//TODO make some small example about varargs passing in a single array. The array will be converted
+		Map<String, Integer> names = new HashMap<String, Integer>();
 
-		Closure0<String> helloBot = new AbstractClosure0<String>(greeting) {
-			String name = "Bob";
+		Closure0<String> helloBot = new AbstractClosure0<String>(names, 5) {
+			String greeting = "Hello";
 
 			public String run() {
-				Object x = a1();
-				System.err.println(x.getClass());
+				StringBuilder sb = new StringBuilder();
+				Map<String, Integer> names = a1();
 
-				//String front[] = a1();
-				//return front[0] + " " + name;
-				return "";
+				for (Map.Entry<String, Integer> entry : names.entrySet()) {
+					for (int i=0; i < entry.getValue(); ++i) {
+						sb.append(greeting).append(" ").append(entry.getKey()).append(".\n");
+					}
+					sb.append("\n");
+				}
+
+				return sb.toString();
 			}
 		};
 
 		// using a view
 		Closure0View<String> view = helloBot.getView();
-		out(view.run());      // Hello Bob
+		names.put("Alice", 2);
+		names.put("Bob", 3);
+		out(view.run());
 
 		// curried
-		greeting[0] = "Goodbye";
-		helloBot.curry(1, "Alice");
-		out(view.run());      // Goodbye Alice
+		names.clear();
+		names.put("Martin", 3);
+		names.put("Akheel", 2);
+		helloBot.curry(1, "Goodbye");
+		out(view.run());    // Same view, different output.
 	}
 
+
+	@Test
+	public void varargArrays() {
+		// Keep in mind the way varargs works in Java, becaus this will affect argument passing.
+		Integer numbers[] = {1,2,3};
+
+		Closure0 c1 = new AbstractClosure0(numbers) {
+			//Integer nums[] = (Integer[]) a1();  // This will fail! All of the numbers have been split up.
+			Integer n1 = (Integer) a1();          // This is ok.
+
+			public Object run() {
+				return n1;
+			}
+		};
+		out(c1.run());  // outputs 1
+
+		//////////////
+
+		// An array passed with another argument will not combine.
+		Integer num = 14;
+		Closure0 c2 = new AbstractClosure0(numbers, num) {
+			Integer nums[] = (Integer[]) a1();  // This is ok now.
+			Integer num = (Integer) a2();
+
+			public Object run() {
+				return nums[0] + num;
+			}
+		};
+		out(c2.run());  // outputs 15
+
+		//////////////
+
+		// The null value is stored in argument 1, similar to normal Java varargs.
+		Closure0 c3 = new AbstractClosure0(null) {
+
+			public Object run() {
+				return a1();
+			}
+		};
+		out(c3.run());  // outputs null
+
+		/////////////
+
+		// normal Java
+		out("\n");
+		out(regularJava(1));        // 1
+		out(regularJava(1, 2));     // 2
+		out(regularJava(numbers));  // 3
+		out(regularJava(null));     // null
+		out(regularJava());		    // 0
+	}
+
+	private static String regularJava(Integer...args) {
+		return args == null ? "null" : args.length + "";
+	}
 }

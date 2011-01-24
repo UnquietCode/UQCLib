@@ -27,7 +27,7 @@ import static unquietcode.util.Shortcuts.out;
 @SuppressWarnings("unchecked")
 public class MultiClosureCasting_T {
 	@Test
-	public void downcast() {
+	public void gettingViews() {
 		// blah blah multiclosures
 		// Note that here the @Override annotation is required, as the class does not require explicitly
 		// implementing the methods. It's pick and choose.
@@ -98,23 +98,34 @@ public class MultiClosureCasting_T {
 
 	@Test
 	public void mcTest() {
-		AbstractMultiClosure<String> helloMaker =
-		new AbstractMultiClosure<String>() {
+		// MultiClosures will let you know which of their methods have been implemented.
+		// They must be implemented using Object types in the parameters.
+		// Use @Override annotations if that helps.
 
-			public String run(String p1) {
+		MultiClosure<String> helloMaker = new AbstractMultiClosure<String>() {
+
+			public @Override String run(Object p1) {
 				return "hello " + p1;
 			}
 
-			public String run(String p1, String p2) {
+			public @Override String run(Object p1, Object p2) {
 				return "hello " + p1 + " and " + p2;
+			}
+
+			public String run(String p1) {  // This does NOT override any base methods!
+				return "d'oh " + p1;
 			}
 		};
 
+		// Which are implemented
 		for (int i = -1; i < 8; ++i) {
 			out(i + " : " + helloMaker.isImplemented(i));
 		}
 
-		//helloMaker.run(1,2,3,4,5); //exception test
+		out();
+		out(helloMaker.run(1));         // ok
+		out(helloMaker.run(1,2));       // fine
+		//out(helloMaker.run(1,2,3));   // This will throw an exception (NotImplementedException).
 	}
 
 

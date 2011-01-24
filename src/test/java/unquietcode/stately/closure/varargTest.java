@@ -11,7 +11,7 @@
 package unquietcode.stately.closure;
 
 import org.junit.Test;
-
+import static unquietcode.util.Shortcuts.out;
 /**
  * @author  Benjamin Fagin
  * @version Dec 10, 2010
@@ -19,19 +19,19 @@ import org.junit.Test;
 public class varargTest {
 	@Test
 	public void varargTestX() {
-		System.out.println(tryit());                     // 0
-		System.out.println(tryit(1));                    // 1
-		System.out.println(tryit(1, 2));                 // 2
-	  //System.out.println(tryit(null));                 // NullPointerException
-		System.out.println(tryit(new Object[] {}));      // 0
-		System.out.println(tryit(new Object[] {null}));  // 1
+		out(tryit());                     // 0
+		out(tryit(1));                    // 1
+		out(tryit(1, 2));                 // 2
+	  //out(tryit(null));                 // NullPointerException
+		out(tryit(new Object[] {}));      // 0
+		out(tryit(new Object[] {null}));  // 1
 
-		System.out.println(catchNull(null));             // 1
-		System.out.println(catchNull(null, null));		 // 2
+		out(catchNull(null));             // 1
+		out(catchNull(null, null));		 // 2
 
-		System.out.println(whoGetsIt());
-		System.out.println(whoGetsIt(null));
-		System.out.println(whoGetsIt(new Object[] {}));
+		out(whoGetsIt());
+		out(whoGetsIt(null));
+		out(whoGetsIt(new Object[] {}));
 	}
 
 	private String tryit(Object...args) {
@@ -51,6 +51,19 @@ public class varargTest {
 
 	private String whoGetsIt(Object...args) {
 		return "varags";
+	}
+
+	@Test
+	public void arrayPassingTest() {
+		String arr[] = {"Alice", "Bob"};
+
+		out(arrayPass(arr));
+		out(arrayPass(arr, "Steve"));
+		out(arrayPass("Alice", "Bob"));
+	}
+
+	private String arrayPass(Object...args) {
+		return args.length + "";
 	}
 
 }
