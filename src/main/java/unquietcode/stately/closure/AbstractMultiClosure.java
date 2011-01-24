@@ -105,10 +105,6 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 		return isImplemented[x] || isImplemented[MAX_PARAMS+1];
 	}
 
-	public final Class[] getArgumentTypes() {
-		return super.getArgumentTypes(AbstractMultiClosure.class);
-	}
-
 	public final MultiClosureView<Z> getView() {
 		final MultiClosure<Z> base = this;
 
@@ -121,8 +117,12 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 				return base.run(p1);
 			}
 
+			public Z run(Object p1, Object p2) {
+				return base.run(p1,p2);
+			}
+
 			public Z run(Object p1, Object p2, Object p3) {
-				return base.run(p1, p2,p3);
+				return base.run(p1,p2,p3);
 			}
 
 			public Z run(Object p1, Object p2, Object p3, Object p4) {
@@ -173,8 +173,8 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 				return base.toClosure();
 			}
 
-			public Class[] getArgumentTypes() {
-				return base.getArgumentTypes();
+			public boolean isImplemented(int x) {
+				return base.isImplemented(x);
 			}
 		};
 	}
@@ -185,10 +185,6 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 		return new Closure0View<Z>() {
 			public Z run() {
 				return base.run();
-			}
-
-			public Class[] getArgumentTypes() {
-				return base.getArgumentTypes();
 			}
 		};
 	}
@@ -295,15 +291,139 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 		};
 	}
 
-/*	//TODO maybe a future idea, not feeling it now
-	public static <z, a extends ,b,c,d,e,f> MultiClosure<z, a,b,c,d,e,f> makeMultiClosure(U...closures) {
-		// need to find out if more than one type of closure is present
-		Map<Integer, AbstractClosure> map = new HashMap<Integer, AbstractClosure>();
+	public static MultiClosureView makeMultiClosure(final Closure0 c0, final Closure1 c1, final Closure2 c2,
+	                                                final Closure3 c3, final Closure4 c4, final Closure5 c5,
+	                                                final Closure6 c6, final Closure cX) {
+		return new MultiClosureView() {
+			boolean vararg = cX == null;
 
-		for (U c : closures) {
-			//if c.
-		}
+			public boolean isImplemented(int x) {
+				if (vararg)
+					return true;
 
-		return null;
-	}*/
+				switch (x) {
+					case 0: return c0 != null;
+					case 1: return c1 != null;
+					case 2: return c2 != null;
+					case 3: return c3 != null;
+					case 4: return c4 != null;
+					case 5: return c5 != null;
+					case 6: return c6 != null;
+					default: return false;
+				}
+			}
+
+			public Object run() {
+				if (c0 == null)
+					throw new NotImplementedException();
+				else
+					return c0.run();
+			}
+
+			public Object run(Object p1) {
+				if (c1 == null)
+					throw new NotImplementedException();
+				else
+					return c1.run(p1);
+			}
+
+			public Object run(Object p1, Object p2) {
+				if (c2 == null)
+					throw new NotImplementedException();
+				else
+					return c2.run(p1, p2);
+			}
+
+			public Object run(Object p1, Object p2, Object p3) {
+				if (c3 == null)
+					throw new NotImplementedException();
+				else
+					return c3.run(p1, p2, p3);
+			}
+
+			public Object run(Object p1, Object p2, Object p3, Object p4) {
+				if (c4 == null)
+					throw new NotImplementedException();
+				else
+					return c4.run(p1, p2, p3, p4);
+			}
+
+			public Object run(Object p1, Object p2, Object p3, Object p4, Object p5) {
+				if (c5 == null)
+					throw new NotImplementedException();
+				else
+					return c5.run(p1, p2, p3, p4, p5);
+			}
+
+			public Object run(Object p1, Object p2, Object p3, Object p4, Object p5, Object p6) {
+				if (c6 == null)
+					throw new NotImplementedException();
+				else
+					return c6.run(p1, p2, p3, p4, p5, p6);
+			}
+
+			public Object run(Object...args) {
+				if (cX == null)
+					throw new NotImplementedException();
+				else
+					return cX.run(args);
+			}
+
+			public Closure0View toClosure0() {
+				if (c0 == null)
+					return null;
+				else
+					return c0.getView();
+			}
+
+			public Closure1View toClosure1() {
+				if (c1 == null)
+					return null;
+				else
+					return c1.getView();
+			}
+
+			public Closure2View toClosure2() {
+				if (c2 == null)
+					return null;
+				else
+					return c2.getView();
+			}
+
+			public Closure3View toClosure3() {
+				if (c3 == null)
+					return null;
+				else
+					return c3.getView();
+			}
+
+			public Closure4View toClosure4() {
+				if (c4 == null)
+					return null;
+				else
+					return c4.getView();
+			}
+
+			public Closure5View toClosure5() {
+				if (c5 == null)
+					return null;
+				else
+					return c5.getView();
+			}
+
+			public Closure6View toClosure6() {
+				if (c6 == null)
+					return null;
+				else
+					return c6.getView();
+			}
+
+			public ClosureView toClosure() {
+				if (cX == null)
+					return null;
+				else
+					return cX.getView();
+			}
+		};
+	}
 }

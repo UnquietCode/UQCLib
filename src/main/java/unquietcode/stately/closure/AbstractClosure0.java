@@ -24,10 +24,6 @@ public abstract class AbstractClosure0<Z> extends ClosureBase<Z> implements Clos
 		super(args);
 	}
 
-	public final Class[] getArgumentTypes() {
-		return new Class[0];
-	}
-
 	@SuppressWarnings("unchecked")
 	public final Closure0View<Z> getView() {
 		final Closure0 base = this;
@@ -35,10 +31,6 @@ public abstract class AbstractClosure0<Z> extends ClosureBase<Z> implements Clos
 		return new Closure0View() {
 			public Object run() {
 				return base.run();
-			}
-
-			public Class[] getArgumentTypes() {
-				return base.getArgumentTypes();
 			}
 		};
 	}
@@ -54,10 +46,6 @@ public abstract class AbstractClosure0<Z> extends ClosureBase<Z> implements Clos
 
 			public int getExpectedArgs() {
 				return 0;
-			}
-
-			public Class[] getArgumentTypes() {
-				return base.getArgumentTypes();
 			}
 		};
 	}

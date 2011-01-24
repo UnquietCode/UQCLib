@@ -5,5 +5,5 @@ package unquietcode.stately.closure.view;
  * @version 01-23-2011
  */
 public interface ClosureViewBase<Z> {
-	Class[] getArgumentTypes();
+	; // nothing for now
 }

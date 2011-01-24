@@ -6,4 +6,5 @@ package unquietcode.stately.closure.view;
  */
 public interface Closure3View<Z, A,B,C> extends ClosureViewBase<Z> {
 	Z run(A p1, B p2, C p3);
+	Class[] getArgumentTypes();
 }

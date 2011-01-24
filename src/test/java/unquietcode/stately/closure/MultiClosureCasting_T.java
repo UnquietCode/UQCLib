@@ -23,19 +23,23 @@ import static unquietcode.util.Shortcuts.out;
  * @author  Benjamin Fagin
  * @version Dec 11, 2010
  */
-//TODO finish work on this
 @SuppressWarnings("unchecked")
 public class MultiClosureCasting_T {
 	@Test
-	public void gettingViews() {
-		// blah blah multiclosures
-		// Note that here the @Override annotation is required, as the class does not require explicitly
+	public void multiclosureBasics() {
+		// Multiclosures are like an abstract collection of other closures. They can support 0-6 arguments
+		// and vararg. Any method not implemented by you will throw an exception.
+		// The vararg method functions as a fallback for any unimplemented versions, if it is itself defined.
+		// They support views just like the other classes, and can even offer individual views for each
+		// of the closure types 0-6 and the unified ClosureView.
+
+		// Note that here the Overrides are optional, as the class does not require explicitly
 		// implementing the methods. It's pick and choose.
 
 		MultiClosure<String> helloMaker = new AbstractMultiClosure() {
 			String greeting = "Hello";
 
-			public @Override Object run(Object p1) {
+			public Object run(Object p1) {
 				return greeting + " " + p1;
 			}
 
@@ -117,7 +121,7 @@ public class MultiClosureCasting_T {
 			}
 		};
 
-		// Which are implemented
+		// We can figure out what's implemented.
 		for (int i = -1; i < 8; ++i) {
 			out(i + " : " + helloMaker.isImplemented(i));
 		}

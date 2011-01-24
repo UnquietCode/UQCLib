@@ -119,7 +119,6 @@ abstract class ClosureBase<Z> {
 	}
 
 	public abstract ClosureView<Z> toClosure();
-	public abstract Class[] getArgumentTypes();
 	public abstract <T extends ClosureViewBase<Z>> T getView();
 
 	//TODO generate a "signature" version of the argument types array

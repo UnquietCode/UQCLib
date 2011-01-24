@@ -21,10 +21,6 @@ public abstract class AbstractClosure<Z> extends ClosureBase<Z> implements Closu
 		return expectedArgs;
 	}
 
-	public final Class[] getArgumentTypes() {
-		return super.getArgumentTypes(AbstractClosure.class);
-	}
-
 	public AbstractClosure(Object...args) {
 		super(args);
 	}
@@ -43,11 +39,7 @@ public abstract class AbstractClosure<Z> extends ClosureBase<Z> implements Closu
 			}
 
 			public int getExpectedArgs() {
-				return 7;
-			}
-
-			public Class[] getArgumentTypes() {
-				return base.getArgumentTypes();
+				return base.getExpectedArgs();
 			}
 		};
 	}

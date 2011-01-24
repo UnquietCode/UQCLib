@@ -7,11 +7,14 @@ package unquietcode.stately.closure.view;
 public interface MultiClosureView<Z> extends ClosureViewBase<Z> {
 	Z run();
 	Z run(Object p1);
+	Z run(Object p1, Object p2);
 	Z run(Object p1, Object p2, Object p3);
 	Z run(Object p1, Object p2, Object p3, Object p4);
 	Z run(Object p1, Object p2, Object p3, Object p4, Object p5);
 	Z run(Object p1, Object p2, Object p3, Object p4, Object p5, Object p6);
 	Z run(Object...args);
+
+	boolean isImplemented(int x);
 
 	Closure0View<Z> toClosure0();
 	Closure1View toClosure1();
