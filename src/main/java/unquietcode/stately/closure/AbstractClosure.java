@@ -1,6 +1,8 @@
 package unquietcode.stately.closure;
 
 
+import unquietcode.stately.closure.view.ClosureView;
+
 /**
  * @author  Benjamin Fagin
  * @version 12/12/10
@@ -27,8 +29,27 @@ public abstract class AbstractClosure<Z> extends ClosureBase<Z> implements Closu
 		super(args);
 	}
 
-	public final AbstractClosure<Z> toClosure() {
-		return this;
+	public final ClosureView<Z> getView() {
+		return this.toClosure();
+	}
+
+	@SuppressWarnings("unchecked")
+	public final ClosureView<Z> toClosure() {
+		final Closure base = this;
+
+		return new ClosureView<Z>() {
+			public Z run(Object...args) {
+				return (Z) base.run(args);
+			}
+
+			public int getExpectedArgs() {
+				return 7;
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
+			}
+		};
 	}
 
 	public abstract Z run(Object...args);

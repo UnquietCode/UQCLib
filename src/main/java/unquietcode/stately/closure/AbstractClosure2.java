@@ -10,6 +10,10 @@
 
 package unquietcode.stately.closure;
 
+import unquietcode.stately.closure.view.Closure1View;
+import unquietcode.stately.closure.view.Closure2View;
+import unquietcode.stately.closure.view.ClosureView;
+
 /**
  * @author Benjamin Fagin
  * Date: Dec 10, 2010
@@ -34,22 +38,36 @@ public abstract class AbstractClosure2<Z, A,B> extends ClosureBase<Z> implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public final Closure<Z> toClosure() {
-		ClosureBase base = wrapped ? (ClosureBase) this.arg(1) : this;
+	public final Closure2View<Z, A,B> getView() {
+		final Closure2 base = this;
 
-		AbstractClosure closure = new AbstractClosure(base) {
-			AbstractClosure2 c2 = (AbstractClosure2) arg(1);
+		return new Closure2View() {
+			public Object run(Object p1, Object p2) {
+				return base.run(p1, p2);
+			}
 
-			public Z run(Object...args) {
-				if (args.length != 2)
-					throw new ClosureException("Invalid number of arguments. Expected 2");
-				
-				return (Z) c2.run(args[0], args[1]);
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
 			}
 		};
+	}
 
-		closure.wrapped = true;
-		closure.setExpectedArgs(2);
-		return closure;
+	@SuppressWarnings("unchecked")
+	public final ClosureView<Z> toClosure() {
+		final Closure2 base = this;
+
+		return new ClosureView<Z>() {
+			public Z run(Object...args) {
+				return (Z) base.run(args[0], args[1]);
+			}
+
+			public int getExpectedArgs() {
+				return 2;
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
+			}
+		};
 	}
 }

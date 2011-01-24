@@ -11,6 +11,10 @@
 package unquietcode.stately.closure;
 
 import org.junit.Test;
+import unquietcode.stately.closure.view.Closure1View;
+import unquietcode.stately.closure.view.Closure2View;
+import unquietcode.stately.closure.view.Closure3View;
+import unquietcode.stately.closure.view.ClosureView;
 
 import static unquietcode.util.Shortcuts.out;
 
@@ -48,10 +52,12 @@ public class MultiClosureCasting_T {
 					String s = (String) o;
 					sb.append(" ").append(s);
 
-					if (lcv == args.length)
-						sb.append(", and"); //TODO fix
-					else if (++lcv != args.length)
+					if (lcv == args.length-2)
+						sb.append(", and");
+					else if (lcv < args.length-1)
 						sb.append(",");
+
+					++lcv;
 				}
 
 				return sb.toString();
@@ -65,35 +71,29 @@ public class MultiClosureCasting_T {
 
 
 		// We can try to get a more constrained versions of our helloMaker
-		Closure1<String, String> singles = helloMaker.toClosure1();
+		Closure1View<String, String> singles = helloMaker.toClosure1();
 		out(singles.run("Steven"));
 
 		// Of course, you don't have to type them if you don't want to.
-		Closure2 doubles = helloMaker.toClosure2();
+		Closure2View doubles = helloMaker.toClosure2();
 		out(doubles.run("Tabitha", "Aragorn"));
 
 		// We didn't define a 3 argument version, but we did define a vararg, so it will work.
-		Closure3<String, String, String, String> fallback = helloMaker.toClosure3();
+		Closure3View<String, String, String, String> fallback = helloMaker.toClosure3();
 		out(fallback.run("Arnold", "Julie", "Marissa"));
 
 		// However, if we did not define a vararg version, we would have gotten an exception at runtime!
 
-		// We can even curry the sdfsd
+		// We can curry the MultiClosure too.
 		out();
 		helloMaker.curry(1, "Goodbye");
-		Closure closure = helloMaker.toClosure();
-		out(closure.run("Bob", "Allan", "Susan", "Jennifer", "Alexander", "Ryan", "Chris"));
 		out(helloMaker.run("Bob", "Allan", "Susan", "Jennifer", "Alexander", "Ryan", "Chris"));
 
-		//TODO so is this the way it should be?
-		// The expectation should be that currying a closure will only affect that closure.
-		// right now it alters the base.
-		//TODO test this on closure3 -> closure for example, though I suspect the same result.
-
+		// Remember though that the views are affected.
 		out();
+		ClosureView closure = helloMaker.toClosure();
 		helloMaker.curry(1, "Welcome back");
 		out(closure.run("Bob", "Allan", "Susan", "Jennifer", "Alexander", "Ryan", "Chris"));
-		out(helloMaker.run("Bob", "Allan", "Susan", "Jennifer", "Alexander", "Ryan", "Chris"));
 	}
 
 	@Test
@@ -102,7 +102,6 @@ public class MultiClosureCasting_T {
 		new AbstractMultiClosure<String>() {
 
 			public String run(String p1) {
-				this.wrapped = false; //TODO this is a problem
 				return "hello " + p1;
 			}
 

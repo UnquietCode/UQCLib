@@ -1,22 +1,17 @@
-package unquietcode.stately.closure;
-
-import unquietcode.stately.closure.view.*;
+package unquietcode.stately.closure.view;
 
 /**
  * @author  Benjamin Fagin
  * @version 01-23-2011
  */
-public interface MultiClosure<Z> extends ClosureInterfaceBase<Z> {
+public interface MultiClosureView<Z> extends ClosureViewBase<Z> {
 	Z run();
 	Z run(Object p1);
-	Z run(Object p1, Object p2);
 	Z run(Object p1, Object p2, Object p3);
 	Z run(Object p1, Object p2, Object p3, Object p4);
 	Z run(Object p1, Object p2, Object p3, Object p4, Object p5);
 	Z run(Object p1, Object p2, Object p3, Object p4, Object p5, Object p6);
 	Z run(Object...args);
-
-	MultiClosureView<Z> getView();
 
 	Closure0View<Z> toClosure0();
 	Closure1View toClosure1();
@@ -25,5 +20,6 @@ public interface MultiClosure<Z> extends ClosureInterfaceBase<Z> {
 	Closure4View toClosure4();
 	Closure5View toClosure5();
 	Closure6View toClosure6();
-}
 
+	ClosureView<Z> toClosure();
+}

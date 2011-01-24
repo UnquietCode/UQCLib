@@ -11,3 +11,6 @@ public interface ClosureInterfaceBase<Z> {
 	Class[] getArgumentTypes();
 	ClosureView<Z> toClosure();
 }
+
+//Q? should all closures be forced to provide a toMultiClosure method?
+//Q? What's the utility of having a multiclosure with only one working?

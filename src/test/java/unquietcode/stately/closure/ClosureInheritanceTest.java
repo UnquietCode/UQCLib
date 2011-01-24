@@ -11,6 +11,7 @@
 package unquietcode.stately.closure;
 
 import org.junit.Test;
+import unquietcode.stately.closure.view.ClosureView;
 
 import static unquietcode.util.Shortcuts.*;
 
@@ -32,7 +33,7 @@ public class ClosureInheritanceTest {
 			}
 		};
 
-		Closure c = mixer.toClosure();
+		ClosureView c = mixer.toClosure();
 		out("expects " + c.getExpectedArgs() + " arguments");
 		out("types are ");
 		for (Class clazz : mixer.getArgumentTypes()) {

@@ -10,6 +10,9 @@
 
 package unquietcode.stately.closure;
 
+import unquietcode.stately.closure.view.Closure0View;
+import unquietcode.stately.closure.view.ClosureView;
+
 /**
  * @author  Benjamin Fagin
  * @version Dec 10, 2010
@@ -26,19 +29,36 @@ public abstract class AbstractClosure0<Z> extends ClosureBase<Z> implements Clos
 	}
 
 	@SuppressWarnings("unchecked")
-	public final Closure<Z> toClosure() {
-		ClosureBase base = wrapped ? (ClosureBase) this.arg(1) : this;
+	public final Closure0View<Z> getView() {
+		final Closure0 base = this;
 
-		AbstractClosure closure = new AbstractClosure(base) {
-			AbstractClosure0 c0 = (AbstractClosure0) arg(1);
+		return new Closure0View() {
+			public Object run() {
+				return base.run();
+			}
 
-			public Z run(Object...args) {
-				return (Z) c0.run();
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
 			}
 		};
+	}
 
-		closure.wrapped = true;
-		closure.setExpectedArgs(0);
-		return closure;
+	@SuppressWarnings("unchecked")
+	public final ClosureView<Z> toClosure() {
+		final Closure0 base = this;
+
+		return new ClosureView<Z>() {
+			public Z run(Object...args) {
+				return (Z) base.run();
+			}
+
+			public int getExpectedArgs() {
+				return 0;
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
+			}
+		};
 	}
 }

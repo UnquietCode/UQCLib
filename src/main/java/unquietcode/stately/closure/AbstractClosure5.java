@@ -10,6 +10,9 @@
 
 package unquietcode.stately.closure;
 
+import unquietcode.stately.closure.view.Closure5View;
+import unquietcode.stately.closure.view.ClosureView;
+
 /**
  * @author  Ben
  * @version Dec 10, 2010
@@ -26,20 +29,36 @@ public abstract class AbstractClosure5<Z, A,B,C,D,E> extends ClosureBase<Z> impl
 	}
 
 	@SuppressWarnings("unchecked")
-	public final AbstractClosure<Z> toClosure() {
-		ClosureBase base = wrapped ? (ClosureBase) this.arg(1) : this;
+	public final Closure5View<Z, A,B,C,D,E> getView() {
+		final Closure5 base = this;
 
-		AbstractClosure closure = new AbstractClosure(base) {
-			AbstractClosure5 c5 = (AbstractClosure5) arg(1);
+		return new Closure5View() {
+			public Object run(Object p1, Object p2, Object p3, Object p4, Object p5) {
+				return base.run(p1, p2, p3, p4, p5);
+			}
 
-			@Override
-			public Z run(Object...args) {
-				return (Z) c5.run(args[0], args[1], args[2], args[3], args[4]);
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
 			}
 		};
+	}
 
-		closure.wrapped = true;
-		closure.setExpectedArgs(5);
-		return closure;
+	@SuppressWarnings("unchecked")
+	public final ClosureView<Z> toClosure() {
+		final Closure5 base = this;
+
+		return new ClosureView<Z>() {
+			public Z run(Object...args) {
+				return (Z) base.run(args[0], args[1], args[2], args[3], args[4]);
+			}
+
+			public int getExpectedArgs() {
+				return 5;
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
+			}
+		};
 	}
 }

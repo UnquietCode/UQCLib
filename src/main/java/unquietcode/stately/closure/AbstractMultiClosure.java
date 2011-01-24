@@ -11,6 +11,7 @@
 package unquietcode.stately.closure;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import unquietcode.stately.closure.view.*;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -108,107 +109,190 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 		return super.getArgumentTypes(AbstractMultiClosure.class);
 	}
 
-	@SuppressWarnings("unchecked")
-	public Closure0 toClosure0() {
-		Closure0 closure = new AbstractClosure0(this) {
-			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
+	public final MultiClosureView<Z> getView() {
+		final MultiClosure<Z> base = this;
 
-			public Object run() {
-				return mc.run();
+		return new MultiClosureView<Z>() {
+			public Z run() {
+				return base.run();
+			}
+
+			public Z run(Object p1) {
+				return base.run(p1);
+			}
+
+			public Z run(Object p1, Object p2, Object p3) {
+				return base.run(p1, p2,p3);
+			}
+
+			public Z run(Object p1, Object p2, Object p3, Object p4) {
+				return base.run(p1,p2,p3,p4);
+			}
+
+			public Z run(Object p1, Object p2, Object p3, Object p4, Object p5) {
+				return base.run(p1,p2,p3,p4,p5);
+			}
+
+			public Z run(Object p1, Object p2, Object p3, Object p4, Object p5, Object p6) {
+				return base.run(p1,p2,p3,p4,p5,p6);
+			}
+
+			public Z run(Object...args) {
+				return base.run(args);
+			}
+
+			public Closure0View<Z> toClosure0() {
+				return base.toClosure0();
+			}
+
+			public Closure1View toClosure1() {
+				return base.toClosure1();
+			}
+
+			public Closure2View toClosure2() {
+				return base.toClosure2();
+			}
+
+			public Closure3View toClosure3() {
+				return base.toClosure3();
+			}
+
+			public Closure4View toClosure4() {
+				return base.toClosure4();
+			}
+
+			public Closure5View toClosure5() {
+				return base.toClosure5();
+			}
+
+			public Closure6View toClosure6() {
+				return base.toClosure6();
+			}
+
+			public ClosureView<Z> toClosure() {
+				return base.toClosure();
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
 			}
 		};
-
-		return closure;
 	}
 
-	//wrapper methods
-	@SuppressWarnings("unchecked")
-	public Closure1 toClosure1() {
-		Closure1 closure = new AbstractClosure1(this) {
-			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
+	public final Closure0View<Z> toClosure0() {
+		final MultiClosure<Z> base = this;
 
+		return new Closure0View<Z>() {
+			public Z run() {
+				return base.run();
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
+			}
+		};
+	}
+
+	public final Closure1View toClosure1() {
+		final MultiClosure base = this;
+
+		return new Closure1View() {
 			public Object run(Object p1) {
-				return mc.run(p1);
+				return base.run(p1);
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
 			}
 		};
-
-		return closure;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Closure2 toClosure2() {
-		Closure2 closure = new AbstractClosure2(this) {
-			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
+	public final Closure2View toClosure2() {
+		final MultiClosure base = this;
 
+		return new Closure2View() {
 			public Object run(Object p1, Object p2) {
-				return mc.run(p1, p2);
+				return base.run(p1, p2);
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
 			}
 		};
-
-		return closure;
 	}
-	@SuppressWarnings("unchecked")
-	public Closure3 toClosure3() {
-		Closure3 closure = new AbstractClosure3(this) {
-			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
+	public final Closure3View toClosure3() {
+		final MultiClosure base = this;
+
+		return new Closure3View() {
 			public Object run(Object p1, Object p2, Object p3) {
-				return mc.run(p1, p2, p3);
+				return base.run(p1, p2, p3);
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
 			}
 		};
-
-		return closure;
 	}
-	@SuppressWarnings("unchecked")
-	public Closure4 toClosure4() {
-		Closure4 closure = new AbstractClosure4(this) {
-			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
 
+	public final Closure4View toClosure4() {
+		final MultiClosure base = this;
+
+		return new Closure4View() {
 			public Object run(Object p1, Object p2, Object p3, Object p4) {
-				return mc.run(p1, p2, p3, p4);
+				return base.run(p1, p2, p3, p4);
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
 			}
 		};
-
-		return closure;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Closure5 toClosure5() {
-		Closure5 closure = new AbstractClosure5(this) {
-			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
+	public final Closure5View toClosure5() {
+		final MultiClosure base = this;
 
+		return new Closure5View() {
 			public Object run(Object p1, Object p2, Object p3, Object p4, Object p5) {
-				return mc.run(p1, p2, p3, p4, p5);
+				return base.run(p1, p2, p3, p4, p5);
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
 			}
 		};
-
-		return closure;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Closure6 toClosure6() {
-		Closure6 closure = new AbstractClosure6(this) {
-			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
+	public final Closure6View toClosure6() {
+		final MultiClosure base = this;
 
+		return new Closure6View() {
 			public Object run(Object p1, Object p2, Object p3, Object p4, Object p5, Object p6) {
-				return mc.run(p1, p2, p3, p4, p5, p6);
+				return base.run(p1, p2, p3, p4, p5, p6);
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
 			}
 		};
-
-		return closure;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Closure<Z> toClosure() {
-		Closure closure = new AbstractClosure(this) {
-			AbstractMultiClosure mc = (AbstractMultiClosure) a1();
+	public final ClosureView<Z> toClosure() {
+		final MultiClosure<Z> base = this;
 
-			public Object run(Object...params) {
-				return mc.run(params);
+		return new ClosureView<Z>() {
+			public Z run(Object...args) {
+				return base.run(args);
+			}
+
+			public int getExpectedArgs() {
+				return -1;
+			}
+
+			public Class[] getArgumentTypes() {
+				return base.getArgumentTypes();
 			}
 		};
-
-		return closure;
 	}
 
 /*	//TODO maybe a future idea, not feeling it now

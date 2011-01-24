@@ -6,10 +6,8 @@ import com.sun.source.util.Trees;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.*;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
 import javax.tools.Diagnostic.Kind;
 
@@ -20,6 +18,7 @@ import javax.tools.Diagnostic.Kind;
  *          Date: 12/11/10
  */
 @SupportedAnnotationTypes("unquietcode.annotations.Warning")
+@SupportedSourceVersion(SourceVersion.RELEASE_6)
 public class WarningProcessor extends AbstractProcessor {
 
 	private ProcessingEnvironment env;

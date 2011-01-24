@@ -23,7 +23,6 @@ import java.util.Arrays;
  */
 abstract class ClosureBase<Z> {
 	private Object arguments[];
-	boolean wrapped = false;
 
 	protected ClosureBase(Object...args) {
 		if (args == null)
@@ -66,16 +65,10 @@ abstract class ClosureBase<Z> {
 		return Arrays.copyOf(arguments, arguments.length);
 	}
 
-
-	public final boolean isWrapped() {
-		return wrapped;
-	}
-
 	@SuppressWarnings("unchecked")
 	public final void curry(int var, Object replacement) {
 		var -= 1;
-		ClosureBase closure = wrapped ? (ClosureBase) this.arg(1) : this;
-		Field f[] = closure.getClass().getDeclaredFields();
+		Field f[] = this.getClass().getDeclaredFields();
 
 		if (var >= f.length) {
 			throw new ClosureException("invalid field ("+ (var+1) +")");
@@ -94,7 +87,7 @@ abstract class ClosureBase<Z> {
 			field.setAccessible(true);
 
 		try {
-			field.set(closure, replacement);
+			field.set(this, replacement);
 		} catch (IllegalAccessException ex) {
 			throw new ClosureException("Could not access field to change.", ex);
 		} catch (IllegalArgumentException ex) {
@@ -127,7 +120,7 @@ abstract class ClosureBase<Z> {
 
 	public abstract ClosureView<Z> toClosure();
 	public abstract Class[] getArgumentTypes();
-//	public abstract <T extends ClosureViewBase<Z>> T getView();
+	public abstract <T extends ClosureViewBase<Z>> T getView();
 
 	//TODO generate a "signature" version of the argument types array
 }
