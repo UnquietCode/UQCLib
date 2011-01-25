@@ -15,13 +15,13 @@ import unquietcode.stately.closure.view.Closure6View;
 import unquietcode.stately.closure.view.ClosureView;
 
 /**
- * @author  Ben
+ * @author  Benjamin Fagin
  * @version Dec 10, 2010
  */
 public abstract class AbstractClosure6<Z, A,B,C,D,E,F> extends ClosureBase<Z> implements Closure6<Z, A,B,C,D,E,F> {
 	public abstract Z run(A p1, B p2, C p3, D p4, E p5, F p6);
 
-	public AbstractClosure6(Object... args) {
+	public AbstractClosure6(Object...args) {
 		super(args);
 	}
 

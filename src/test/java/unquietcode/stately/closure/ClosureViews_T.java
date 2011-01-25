@@ -132,6 +132,11 @@ public class ClosureViews_T {
 
 
 	@Test
+	/*  //TODO
+		The java compiler warns about theset hings tsinsdf
+		Think about it like this: passing null is passing in one Object which is null.
+		It therefore goes to argument 1.
+	 */
 	public void varargArrays() {
 		// Keep in mind the way varargs works in Java, becaus this will affect argument passing.
 		Integer numbers[] = {1,2,3};

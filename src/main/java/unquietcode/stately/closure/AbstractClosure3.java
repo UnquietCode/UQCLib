@@ -21,7 +21,7 @@ import unquietcode.stately.closure.view.ClosureView;
 public abstract class AbstractClosure3<Z, A,B,C> extends ClosureBase<Z> implements Closure3<Z, A,B,C>{
 	public abstract Z run(A p1, B p2, C p3);
 
-	public AbstractClosure3(Object... args) {
+	public AbstractClosure3(Object...args) {
 		super(args);
 	}
 

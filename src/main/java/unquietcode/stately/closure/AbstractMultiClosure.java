@@ -10,6 +10,7 @@
 
 package unquietcode.stately.closure;
 
+import com.sun.corba.se.spi.ior.ObjectKey;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import unquietcode.stately.closure.view.*;
 
@@ -180,6 +181,9 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 	}
 
 	public final Closure0View<Z> toClosure0() {
+		if (!isImplemented(0))
+			return null;
+
 		final MultiClosure<Z> base = this;
 
 		return new Closure0View<Z>() {
@@ -190,6 +194,9 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 	}
 
 	public final Closure1View toClosure1() {
+		if (!isImplemented(1))
+			return null;
+
 		final MultiClosure base = this;
 
 		return new Closure1View() {
@@ -198,12 +205,15 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 			}
 
 			public Class[] getArgumentTypes() {
-				return base.getArgumentTypes();
+				return new Class[]{Object.class};
 			}
 		};
 	}
 
 	public final Closure2View toClosure2() {
+		if (!isImplemented(2))
+			return null;
+
 		final MultiClosure base = this;
 
 		return new Closure2View() {
@@ -212,12 +222,15 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 			}
 
 			public Class[] getArgumentTypes() {
-				return base.getArgumentTypes();
+				return new Class[]{Object.class, Object.class};
 			}
 		};
 	}
 
 	public final Closure3View toClosure3() {
+		if (!isImplemented(3))
+			return null;
+
 		final MultiClosure base = this;
 
 		return new Closure3View() {
@@ -226,12 +239,15 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 			}
 
 			public Class[] getArgumentTypes() {
-				return base.getArgumentTypes();
+				return new Class[]{Object.class, Object.class, Object.class};
 			}
 		};
 	}
 
 	public final Closure4View toClosure4() {
+		if (!isImplemented(4))
+			return null;
+
 		final MultiClosure base = this;
 
 		return new Closure4View() {
@@ -240,12 +256,15 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 			}
 
 			public Class[] getArgumentTypes() {
-				return base.getArgumentTypes();
+				return new Class[]{Object.class, Object.class, Object.class, Object.class};
 			}
 		};
 	}
 
 	public final Closure5View toClosure5() {
+		if (!isImplemented(5))
+			return null;
+
 		final MultiClosure base = this;
 
 		return new Closure5View() {
@@ -254,12 +273,15 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 			}
 
 			public Class[] getArgumentTypes() {
-				return base.getArgumentTypes();
+				return new Class[]{Object.class, Object.class, Object.class, Object.class, Object.class};
 			}
 		};
 	}
 
 	public final Closure6View toClosure6() {
+		if (!isImplemented(6))
+			return null;
+
 		final MultiClosure base = this;
 
 		return new Closure6View() {
@@ -268,12 +290,15 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 			}
 
 			public Class[] getArgumentTypes() {
-				return base.getArgumentTypes();
+				return new Class[]{Object.class, Object.class, Object.class, Object.class, Object.class, Object.class};
 			}
 		};
 	}
 
 	public final ClosureView<Z> toClosure() {
+		if (!isImplemented(MAX_PARAMS + 1))
+			return null;
+
 		final MultiClosure<Z> base = this;
 
 		return new ClosureView<Z>() {
@@ -284,21 +309,16 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 			public int getExpectedArgs() {
 				return -1;
 			}
-
-			public Class[] getArgumentTypes() {
-				return base.getArgumentTypes();
-			}
 		};
 	}
 
-	public static MultiClosureView makeMultiClosure(final Closure0 c0, final Closure1 c1, final Closure2 c2,
-	                                                final Closure3 c3, final Closure4 c4, final Closure5 c5,
-	                                                final Closure6 c6, final Closure cX) {
-		return new MultiClosureView() {
-			boolean vararg = cX == null;
+	public static MultiClosure makeMultiClosure(final Closure0 c0, final Closure1 c1, final Closure2 c2,
+	                                            final Closure3 c3, final Closure4 c4, final Closure5 c5,
+	                                            final Closure6 c6, final Closure cX) {
+		return new AbstractMultiClosure() {
 
-			public boolean isImplemented(int x) {
-				if (vararg)
+			public final boolean isImplemented(int x) {
+				if (cX != null)
 					return true;
 
 				switch (x) {
@@ -367,62 +387,6 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 					throw new NotImplementedException();
 				else
 					return cX.run(args);
-			}
-
-			public Closure0View toClosure0() {
-				if (c0 == null)
-					return null;
-				else
-					return c0.getView();
-			}
-
-			public Closure1View toClosure1() {
-				if (c1 == null)
-					return null;
-				else
-					return c1.getView();
-			}
-
-			public Closure2View toClosure2() {
-				if (c2 == null)
-					return null;
-				else
-					return c2.getView();
-			}
-
-			public Closure3View toClosure3() {
-				if (c3 == null)
-					return null;
-				else
-					return c3.getView();
-			}
-
-			public Closure4View toClosure4() {
-				if (c4 == null)
-					return null;
-				else
-					return c4.getView();
-			}
-
-			public Closure5View toClosure5() {
-				if (c5 == null)
-					return null;
-				else
-					return c5.getView();
-			}
-
-			public Closure6View toClosure6() {
-				if (c6 == null)
-					return null;
-				else
-					return c6.getView();
-			}
-
-			public ClosureView toClosure() {
-				if (cX == null)
-					return null;
-				else
-					return cX.getView();
 			}
 		};
 	}

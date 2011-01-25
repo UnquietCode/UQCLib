@@ -132,6 +132,10 @@ public class MultiClosureCasting_T {
 		//out(helloMaker.run(1,2,3));   // This will throw an exception (NotImplementedException).
 	}
 
+	@Test
+	public void combinatorTest() {
+		// MultiClosure provides a static method for combining closures into views
+	}
 
 
 }

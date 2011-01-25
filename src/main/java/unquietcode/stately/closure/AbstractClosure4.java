@@ -15,13 +15,13 @@ import unquietcode.stately.closure.view.Closure4View;
 import unquietcode.stately.closure.view.ClosureView;
 
 /**
- * @author Benjamin Fagin
- * Date: Dec 10, 2010
+ * @author  Benjamin Fagin
+ * @version Dec 10, 2010
  */
 public abstract class AbstractClosure4<Z, A,B,C,D> extends ClosureBase<Z> implements Closure4<Z, A,B,C,D> {
 	public abstract Z run(A p1, B p2, C p3, D p4);
 
-	public AbstractClosure4(Object... args) {
+	public AbstractClosure4(Object...args) {
 		super(args);
 	}
 
