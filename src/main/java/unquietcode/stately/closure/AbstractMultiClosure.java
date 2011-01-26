@@ -23,13 +23,14 @@ import java.lang.reflect.Method;
  * @version Dec 10, 2010
  */
 public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements MultiClosure<Z> {
-	private static final int MAX_PARAMS = 6;                // for now, it's set at 6
-	boolean isImplemented[] = new boolean[MAX_PARAMS+2];    // 0-6, and then 7 is vararg
-
 	@Retention(RetentionPolicy.RUNTIME)
 	private @interface Original { }
 
-	public AbstractMultiClosure(Object... args) {
+	private static final int MAX_PARAMS = 6;                // for now, it's set at 6
+	boolean isImplemented[] = new boolean[MAX_PARAMS+2];    // 0-6, and then 7 is vararg
+
+
+	public AbstractMultiClosure(Object...args) {
 		super(args);
 
 		//set up an implemented map
@@ -53,15 +54,18 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 				}
 			}
 		}
-
-		//method order isn't guaranteed, so afterwards make sure we know what's actually possible
-		//also note though that this is just what's possible, so not what are actually overridded. Maybe better to
-		//preserve that elsewhere
-		/*for (int i=0; i <= MAX_PARAMS; ++i)
-			isImplemented[i] |= isImplemented[MAX_PARAMS];*/
-		//TODO ...what?
-
 	}
+
+	public final boolean isImplemented(int x) {
+		if (x < 0)
+			return false;
+
+		if (x > MAX_PARAMS+1)
+			x = MAX_PARAMS+1;
+
+		return isImplemented[MAX_PARAMS+1] || isImplemented[x];
+	}
+
 
 	@Original
 	public Z run() {
@@ -96,16 +100,7 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 		throw new NotImplementedException();
 	}
 
-	public boolean isImplemented(int x) {
-		if (x < 0)
-			return false;
-
-		if (x > MAX_PARAMS+1)
-			x = MAX_PARAMS+1;
-
-		return isImplemented[x] || isImplemented[MAX_PARAMS+1];
-	}
-
+//TODO this is indicative of a larger problem in the class design
 	public final MultiClosureView<Z> getView() {
 		final MultiClosure<Z> base = this;
 
@@ -312,12 +307,43 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 		};
 	}
 
-	public static MultiClosure makeMultiClosure(final Closure0 c0, final Closure1 c1, final Closure2 c2,
-	                                            final Closure3 c3, final Closure4 c4, final Closure5 c5,
-	                                            final Closure6 c6, final Closure cX) {
-		return new AbstractMultiClosure() {
+	/**
+	 * Convenient version of makeMultiClosure which accepts closures instead of views.
+	 * Null parameters mean that the resulting multiclosure will have those run methods unimplemented.
+	 *
+	 * @return  A new MultiClosureView, with the appropriately implemented methods.
+	 */
+	public static MultiClosureView<?> makeMultiClosure(final Closure0 c0, final Closure1 c1, final Closure2 c2,
+	                                                   final Closure3 c3, final Closure4 c4, final Closure5 c5,
+	                                                   final Closure6 c6, final Closure cX) {
+		return makeMultiClosure(
+			c0 == null ? null : c0.getView(),
+			c1 == null ? null : c1.getView(),
+			c2 == null ? null : c2.getView(),
+			c3 == null ? null : c3.getView(),
+			c4 == null ? null : c4.getView(),
+			c5 == null ? null : c5.getView(),
+			c6 == null ? null : c6.getView(),
+			cX == null ? null : cX.getView()
+		);
+	}
 
-			public final boolean isImplemented(int x) {
+	/**
+	 * Takes a series of ClosureView objects and combines them into one MultiClosureView.
+	 * null parameters will mean that run method is unimplemented in the resulting combined view.
+	 * isImplemented will continue to return the correct information about implemented methods.
+	 *
+	 * While best practice would dictate that all of the views should return the same type, this is left up
+	 * to the user to enforce. Follow your heart.
+	 *
+	 * @return  A shiny new MultiClosureView with the appropriate run methods implemented.
+	 */
+	public static MultiClosureView<?> makeMultiClosure(final Closure0View c0, final Closure1View c1, final Closure2View c2,
+	                                                   final Closure3View c3, final Closure4View c4, final Closure5View c5,
+	                                                   final Closure6View c6, final ClosureView cX) {
+		return new MultiClosureView() {
+
+			public boolean isImplemented(int x) {
 				if (cX != null)
 					return true;
 
@@ -387,6 +413,38 @@ public abstract class AbstractMultiClosure<Z> extends ClosureBase<Z> implements 
 					throw new NotImplementedException();
 				else
 					return cX.run(args);
+			}
+
+			public Closure0View toClosure0() {
+				return c0;
+			}
+
+			public Closure1View toClosure1() {
+				return c1;
+			}
+
+			public Closure2View toClosure2() {
+				return c2;
+			}
+
+			public Closure3View toClosure3() {
+				return c3;
+			}
+
+			public Closure4View toClosure4() {
+				return c4;
+			}
+
+			public Closure5View toClosure5() {
+				return c5;
+			}
+
+			public Closure6View toClosure6() {
+				return c6;
+			}
+
+			public ClosureView toClosure() {
+				return cX;
 			}
 		};
 	}

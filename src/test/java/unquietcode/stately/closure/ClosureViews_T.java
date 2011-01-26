@@ -95,7 +95,7 @@ public class ClosureViews_T {
 		// Therefore it is best not to consider a view as immutable.
 
 		// Views will also reflect changes to mutable arguments in the original closure.
-		//TODO make some small example about varargs passing in a single array. The array will be converted
+
 		Map<String, Integer> names = new HashMap<String, Integer>();
 
 		Closure0<String> helloBot = new AbstractClosure0<String>(names, 5) {
