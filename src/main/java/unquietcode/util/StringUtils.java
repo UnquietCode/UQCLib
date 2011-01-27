@@ -84,9 +84,7 @@ public class StringUtils {
 	}
 
 	public static boolean hasText(String string) {
-		return string != null  &&  string.trim().isEmpty();
+		return string != null  &&  !string.trim().isEmpty();
 	}
-
-
 }
 

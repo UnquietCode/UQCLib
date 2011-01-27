@@ -50,6 +50,14 @@ public class Chain_T {
 			}
 		}).toClosure();
 
+
+		// Now let's combine them into a chain which makes sentences!
+		Chain<String> sentenceGen = new Chain<String>(articleGen, subjectGen, verbGen, articleGen, objectGen);
+		String sentence = sentenceGen.run("");
+		out(sentence);
+
+
+		// Pretty gross. Let's add a spacer.
 		ClosureView<String> spacer = (new AbstractClosure1<String, String>() {
 			String subjects[] = {"ball", "tomato", "car", "Rubik's cube"};
 			public @Override String run(String s) {
@@ -57,17 +65,13 @@ public class Chain_T {
 			}
 		}).toClosure();
 
+		for (int x : new int[]{1,3,5,7}) {
+			sentenceGen.insert(x, spacer);
+		}
 
-		// Now let's combine them into a chain which makes sentences!
-		Chain<String> sentenceGen = new Chain<String>(articleGen, subjectGen, verbGen, articleGen, objectGen);
-		String sentence = sentenceGen.run("");
-		out(sentence);
-
-		// Pretty gross. Let's add a spacer. //TODO if it were a real collection this is the place to show it
-		sentenceGen = new Chain<String>(articleGen, spacer, subjectGen, spacer,
-										verbGen, spacer, articleGen, spacer, objectGen);
 		sentence = sentenceGen.run("");
 		out(sentence);
+
 
 		// Let's add some punctuation to the end at least. We can easily do that with Chain.append
 		ClosureView<String> punctuator = (new AbstractClosure1<String, String>() {

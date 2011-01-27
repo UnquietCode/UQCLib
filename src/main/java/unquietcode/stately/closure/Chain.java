@@ -2,9 +2,7 @@ package unquietcode.stately.closure;
 
 import unquietcode.stately.closure.view.ClosureView;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author  Benjamin Fagin
@@ -25,7 +23,7 @@ import java.util.List;
  * However, enabling validation will wrap these errors in an unchecked @see{ClosureException}.
  *
  */
-public class Chain<Z> {
+public class Chain<Z> implements Iterable<ClosureView<Z>> {
 	private	LinkedList<ClosureView<Z>> chain = new LinkedList<ClosureView<Z>>();
 	private boolean validate = false;
 
@@ -40,8 +38,23 @@ public class Chain<Z> {
 		}
 	}
 
+	/**
+	 * Takes a series of Chain elements and combines them into a new Chain.
+	 *
+	 * @param chains
+	 */
+	public Chain(Chain<Z>...chains) {
+		for (Chain<Z> c : chains)
+			for (ClosureView<Z> cv : c.chain)
+				chain.addLast(cv);
+	}
+
 	public void setValidation(boolean validate) {
 		this.validate = validate;
+	}
+
+	public boolean isValidated() {
+		return validate;
 	}
 
 	/**
@@ -65,9 +78,91 @@ public class Chain<Z> {
 	 * @return  this Chain, with the newly added closures
 	 */
 	public Chain<Z> append(ClosureView<Z>...closures) {
-		for (int i=0; i < closures.length; ++i) {
-			chain.addLast(closures[i]);
+		for (ClosureView<Z> closure : closures) {
+			chain.addLast(closure);
 		}
+
+		return this;
+	}
+
+	/*
+	 * Inserts a ClosureView into the desired location.
+	 *
+	 */
+	public Chain<Z> insert(int i, ClosureView<Z> closure) {
+		if (i < 0 || i > chain.size())
+			throw new IndexOutOfBoundsException("Invalid index position.");
+
+		chain.add(i, closure);
+		return this;
+	}
+
+	/*
+	 * Inserts a ClosureView into the desired location.
+	 *
+	 */
+	public Chain<Z> insert(int i, Chain<Z> chain) {
+		if (i < 0 || i > chain.size())
+			throw new IndexOutOfBoundsException("Invalid index position.");
+
+		for (int j=chain.chain.size()-1; j >= 0; --j) {
+			this.chain.add(i, chain.chain.get(j));
+		}
+
+		return this;
+	}
+
+	/*
+	 * Inserts a ClosureView into the desired location.
+	 *
+	 */
+	public Chain<Z> remove(int i) {
+		if (i < 0 || i > chain.size())
+			throw new IndexOutOfBoundsException("Invalid index position.");
+
+		chain.remove(i);
+		return this;
+	}
+
+	/*
+	 * Inserts a ClosureView into the desired location.
+	 *
+	 */
+	public ClosureView<Z> get(int i) {
+		if (i < 0 || i > chain.size())
+			throw new IndexOutOfBoundsException("Invalid index position.");
+
+		return chain.get(i);
+	}
+
+	/**
+	 * Prepends a series of closures to the chain.
+	 *
+	 * @param   chains    ClosureView objects to prepend.
+	 * @return  this Chain, with the newly added closures
+	 */
+	public Chain<Z> prepend(Chain<Z>...chains) {
+		for (int i = chains.length-1; i >= 0; --i) {
+			Chain<Z> c = chains[i];
+
+			for (int j = c.chain.size()-1; j >= 0; --j) {
+				chain.addFirst(c.chain.get(j));
+			}
+		}
+
+		return this;
+	}
+
+	/**
+	 * Appends a series of closures to the chain.
+	 *
+	 * @param   chains    ClosureView objects to append.
+	 * @return  this Chain, with the newly added closures
+	 */
+	public Chain<Z> append(Chain<Z>...chains) {
+		for (Chain<Z> c : chains)
+			for (ClosureView<Z> cv : c.chain)
+				chain.addLast(cv);
 
 		return this;
 	}
@@ -83,12 +178,19 @@ public class Chain<Z> {
 		Object result = null;
 
 		if (validate) {
+			result = args;
 			for (ClosureView<Z> closure : chain) {
 				if (closure == null)
 					throw new ClosureException("Closure is null and will not execute!");
 
 				try {
-					result = closure.run(result); //TODO implement as below
+					result = closure.run(args);
+	
+					if (result.getClass().isArray()) {
+						args = (Object[]) result;
+					} else {
+						args = new Object[]{result};
+					}
 				} catch (Exception ex) {
 					throw new ClosureException("Error while executing closure.", ex);
 				}
@@ -114,5 +216,13 @@ public class Chain<Z> {
 		} else {
 			return (Z) result;
 		}
+	}
+
+	public int size() {
+		return chain.size();
+	}
+
+	public Iterator<ClosureView<Z>> iterator() {
+		return chain.iterator();
 	}
 }

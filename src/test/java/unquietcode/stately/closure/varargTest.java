@@ -62,6 +62,18 @@ public class varargTest {
 		out(arrayPass("Alice", "Bob"));
 	}
 
+	@Test
+	public void objectArray() {
+		String arr[] = {"Alice", "Bob"};
+		Object x = arr;
+
+		out(arrayPass(arr));
+		out(arrayPass("work"," thing"));
+		out(arrayPass(new Object[]{"Potato", "It's not a tuber!"}));
+		out(arrayPass(x));
+	}
+
+
 	private String arrayPass(Object...args) {
 		return args.length + "";
 	}
