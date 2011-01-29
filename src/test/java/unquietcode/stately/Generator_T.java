@@ -1,7 +1,8 @@
-package unquietcode.stately.closure;
+package unquietcode.stately;
 
 import org.junit.Test;
 import unquietcode.stately.Generator;
+import unquietcode.stately.closure.AbstractClosure0;
 import unquietcode.stately.closure.view.Closure0View;
 import unquietcode.stately.closure.view.ClosureView;
 
@@ -22,7 +23,7 @@ public class Generator_T {
 			public @Override Integer run() {
 				int current = start;
 
-				if (current < 0) // overflow (can that happen in Java?)
+				if (current < 0) // overflow catch
 					current = 0;
 
 				start += step;
