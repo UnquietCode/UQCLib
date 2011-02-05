@@ -1,12 +1,21 @@
-/*
- * Copyright $YEAR$ Benjamin Fagin
- *
- * This work is licensed under the Common Development and Distribution License (CDDL), Version 1.0
- *
- * Read the included LICENSE.TXT for more information.
- *
- * --------------------------------------------------------------------
- */
+/*******************************************************************************
+ Copyright 2011 Benjamin Fagin
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+
+ Read the included LICENSE.TXT for more information.
+ ******************************************************************************/
 
 package unquietcode.stately.closure;
 
@@ -26,12 +35,12 @@ public class varargTest {
 		out(tryit(new Object[] {}));      // 0
 		out(tryit(new Object[] {null}));  // 1
 
-		out(catchNull(null));             // 1
-		out(catchNull(null, null));		 // 2
+		out(catchNull(null));             // 1 (null)
+		out(catchNull(null, null));		  // 2
 
-		out(whoGetsIt());
-		out(whoGetsIt(null));
-		out(whoGetsIt(new Object[] {}));
+		out(whoGetsIt());                 // empty
+		out(whoGetsIt(null));             // varargs
+		out(whoGetsIt(new Object[] {}));  // varargs
 	}
 
 	private String tryit(Object...args) {
@@ -50,8 +59,9 @@ public class varargTest {
 	}
 
 	private String whoGetsIt(Object...args) {
-		return "varags";
+		return "varargs";
 	}
+
 
 	@Test
 	public void arrayPassingTest() {

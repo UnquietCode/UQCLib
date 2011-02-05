@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2009-2011 Benjamin Fagin
+ Copyright 2011 Benjamin Fagin
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -37,6 +37,11 @@ public class StringUtils {
 		return sb.toString();
 	}
 
+	public static String reverse(String string) {
+		StringBuilder sb = new StringBuilder(string);
+		sb = sb.reverse();
+		return sb.toString();
+	}
 
 	public static boolean startsWithAny(String string, String...prefixes) {
 		for (String prefix : prefixes)

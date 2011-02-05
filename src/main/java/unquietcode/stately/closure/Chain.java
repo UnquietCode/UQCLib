@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2009-2011 Benjamin Fagin
+ Copyright 2011 Benjamin Fagin
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -19,8 +19,12 @@
 
 package unquietcode.stately.closure;
 
+import com.googlecode.gentyref.GenericTypeReflector;
 import unquietcode.stately.closure.view.ClosureView;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.util.*;
 
 /**
@@ -45,6 +49,12 @@ import java.util.*;
 public class Chain<Z> implements Iterable<ClosureView<Z>> {
 	private	LinkedList<ClosureView<Z>> chain = new LinkedList<ClosureView<Z>>();
 	private boolean validate = false;
+	//final Class expectedReturn;
+
+
+	public Chain() {
+		// nothing for now
+	}
 
 	/**
 	 * Takes a series of ClosureView elements and combines them into a "chain".
@@ -109,21 +119,15 @@ public class Chain<Z> implements Iterable<ClosureView<Z>> {
 	 *
 	 */
 	public Chain<Z> insert(int i, ClosureView<Z> closure) {
-		if (i < 0 || i > chain.size())
-			throw new IndexOutOfBoundsException("Invalid index position.");
-
 		chain.add(i, closure);
 		return this;
 	}
 
 	/*
-	 * Inserts a ClosureView into the desired location.
+	 * Inserts an existing chain into the desired location.
 	 *
 	 */
 	public Chain<Z> insert(int i, Chain<Z> chain) {
-		if (i < 0 || i > chain.size())
-			throw new IndexOutOfBoundsException("Invalid index position.");
-
 		for (int j=chain.chain.size()-1; j >= 0; --j) {
 			this.chain.add(i, chain.chain.get(j));
 		}
@@ -132,25 +136,19 @@ public class Chain<Z> implements Iterable<ClosureView<Z>> {
 	}
 
 	/*
-	 * Inserts a ClosureView into the desired location.
+	 * Removes a closure from the desired location, shifting everything after it to the left.
 	 *
 	 */
 	public Chain<Z> remove(int i) {
-		if (i < 0 || i > chain.size())
-			throw new IndexOutOfBoundsException("Invalid index position.");
-
 		chain.remove(i);
 		return this;
 	}
 
 	/*
-	 * Inserts a ClosureView into the desired location.
+	 * Gets a closure at the index.
 	 *
 	 */
 	public ClosureView<Z> get(int i) {
-		if (i < 0 || i > chain.size())
-			throw new IndexOutOfBoundsException("Invalid index position.");
-
 		return chain.get(i);
 	}
 
@@ -187,7 +185,7 @@ public class Chain<Z> implements Iterable<ClosureView<Z>> {
 	}
 
 	/**
-	 * Execute the chain, starting from the first to the last.
+	 * Execute the chain, starting from the first to the last (index 0 to size-1).
 	 *
 	 * @param args
 	 * @return
@@ -197,28 +195,45 @@ public class Chain<Z> implements Iterable<ClosureView<Z>> {
 		Object result = null;
 
 		if (validate) {
-			result = args;
+			int lcv = -1;
+
 			for (ClosureView<Z> closure : chain) {
+				++lcv;
+
 				if (closure == null)
-					throw new ClosureException("Closure is null and will not execute!");
+					throw new ClosureChainException("Closure is null and will not execute! Index: " + lcv);
 
 				try {
+
+					int expected = closure.getExpectedArgs();
+					if (args == null && expected != 1) {
+						throw new ClosureChainException("Wrong number of arguments. Expected: 0, Found: 1");
+					} else if (expected != args.length) {
+						throw new ClosureChainException("Wrong number of arguments. Expected: " + expected + ", Found: " + args.length);
+					}
+
 					result = closure.run(args);
-	
-					if (result.getClass().isArray()) {
+
+					if (result == null) {
+						args = new Object[]{null};
+					} else if (result.getClass().isArray()) {
 						args = (Object[]) result;
 					} else {
 						args = new Object[]{result};
 					}
+				} catch (ClosureChainException ex) {
+					throw ex;
 				} catch (Exception ex) {
-					throw new ClosureException("Error while executing closure.", ex);
+					throw new ClosureChainException("Error while executing closure.", ex);
 				}
 			}
 		} else {
 			for (ClosureView<Z> closure : chain) {
 				result = closure.run(args);
 
-				if (result.getClass().isArray()) {
+				if (result == null) {
+					args = new Object[]{null};
+				} else if (result.getClass().isArray()) {
 					args = (Object[]) result;
 				} else {
 					args = new Object[]{result};
@@ -230,7 +245,7 @@ public class Chain<Z> implements Iterable<ClosureView<Z>> {
 			try {
 				return (Z) result;
 			} catch (Exception ex) {
-				throw new ClosureException("Could not cast result.", ex);
+				throw new ClosureChainException("Could not return result.", ex);
 			}
 		} else {
 			return (Z) result;
