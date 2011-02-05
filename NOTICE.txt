@@ -1,0 +1,23 @@
+Pursuant to section 4d of the Apache License 2.0, under which this code is licensed, this "NOTICE"
+file, or the information that it contains, must be included in every distribution. If the work is modified and
+redistributed, contributors should include their information here as well.
+
+
+Title: "UQCLib"
+Type: Java code library
+Originally developed by: Benjamin Fagin
+Date: July 2009
+
+-------------------------------------------
+This version: 0.1 'Zedoon'
+
+Developed by: Benjamin Fagin
+Date: February 2011
+Notes: Original release version
+
+-------------------------------------------
+Previous versions:
+
+None
+
+-------------------------------------------
