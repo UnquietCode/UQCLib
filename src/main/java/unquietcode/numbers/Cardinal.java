@@ -85,8 +85,12 @@ public class Cardinal {
 			if (cur < 1)
 				break;
 
-			chunks.add(large[i]);
-			chunks.add(makeChunk(cur % 1000));
+		    int mod = cur % 1000;
+
+		    if (mod != 0) {
+			    chunks.add(large[i]);
+				chunks.add(makeChunk(mod));
+		    }
 
 			cur /= 1000;
 			++i;

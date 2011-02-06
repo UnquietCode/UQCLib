@@ -43,6 +43,8 @@ public class CardinalTest {
 			String cardinal = Cardinal.toCardinal(x);
 			out(x + "\t" + sqt(cardinal));
 		}
+
+		out();
 		
 		//10 random doubles
 		for (int i=0; i < 10; ++i) {
@@ -76,5 +78,12 @@ public class CardinalTest {
 		}
 	}
 
+	@Test
+	public void specials() {
+		for (int i : new int[]{100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000}) {
+			String cardinal = Cardinal.toCardinal(i);
+			out(i + "\t" + sqt(cardinal));
+		}
+	}
 
 }
