@@ -19,8 +19,6 @@
 
 package unquietcode.numbers;
 
-import unquietcode.util.Pair;
-
 import java.util.ArrayList;
 
 /**
