@@ -25,12 +25,8 @@
 
     <groupId>UQCLib</groupId>
     <artifactId>UQCLib</artifactId>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 	<version>0.1</version>
-	<modules>
-		<module>UQCAnnotations</module>
-		<module>UQCAnnotations</module>
-	</modules>
 
 	<dependencies>
 		<!-- log4j -->
