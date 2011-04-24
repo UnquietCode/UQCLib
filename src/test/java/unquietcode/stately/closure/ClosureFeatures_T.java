@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import static junit.framework.Assert.assertEquals;
 import static unquietcode.util.Shortcuts.out;
 
 /**
@@ -70,6 +71,11 @@ public class ClosureFeatures_T {
 
 		// Now we can run it!
 		out(adder.run(5));
+
+
+
+		// automated testing below //
+		assertEquals((Integer) 57, adder.run(5));
 	}
 
 	@Test
@@ -102,6 +108,13 @@ public class ClosureFeatures_T {
 		out(add10.run(test));   // 60
 		out(add5.run(test));    // 55
 		out(sub1.run(test));    // 49
+
+
+
+		// automated testing below //
+		assertEquals((Integer) 60, add10.run(test));
+		assertEquals((Integer) 55, add5.run(test));
+		assertEquals((Integer) 49, sub1.run(test));
 	}
 
 	@Test
@@ -131,7 +144,14 @@ public class ClosureFeatures_T {
 		int test = 50;
 		out(add10.run(test));   // 60
 		out(add5.run(test));    // 55
-		out(sub1.run(test));    // 40
+		out(sub1.run(test));    // 49
+
+
+
+		// automated testing below //
+		assertEquals(60, add10.run(test));
+		assertEquals(55, add5.run(test));
+		assertEquals(49, sub1.run(test));
 	}
 
 	@Test
@@ -147,10 +167,15 @@ public class ClosureFeatures_T {
 			public Closure1<Integer, Integer> run(Integer p1) {
 				return new AbstractClosure1<Integer, Integer>(p1) {
 					Integer declaredValue3 = a1();  // adder variable #1
+
+					// these variables aren't automatically segregated, so we have to
+					// defensively copy
+					int myDeclaredValue1 = declaredValue1;
+					int myDeclaredValue2 = declaredValue2;
 					
 					public Integer run(Integer p1) {
 						// Note that if we had used a1() down here, the value would not have been curried!
-						return declaredValue1 + declaredValue2 + declaredValue3 + p1;
+						return myDeclaredValue1 + myDeclaredValue2 + declaredValue3 + p1;
 					}
 				};
 			}
@@ -159,16 +184,22 @@ public class ClosureFeatures_T {
 		// normal
 		Closure1 tarragon = adderFactory.run(100);  // will add 1 + 10 + 100 + x
 		out(tarragon.run(5));                       // which gives us 116
+		assertEquals(116, tarragon.run(5));
 
-		// The returned adder has 1 field, declaredValue3, that we can modify
+		// The returned adder has 1 field, declaredValue3, that we can modify.
 		tarragon.curry(1, 110);                     // change to add 1 + 10 + 110 + x instead
 		out(tarragon.run(5));                       // now we get 126!
+		assertEquals(126, tarragon.run(5));
 
 		// we can change the factory too, though
 		adderFactory.curry(1, 15);
 		adderFactory.curry(2, 20);
 		Closure1 cardamom = adderFactory.run(100);  // will add 15 + 20 + 100 + x
 		out(cardamom.run(5));                       // which gives us 140
+		assertEquals(140, cardamom.run(5));
+
+		// (tarragon will still work if you copy factory data rather than share)
+		assertEquals(126, tarragon.run(5));
 	}
 
 	@Test
@@ -185,11 +216,13 @@ public class ClosureFeatures_T {
 		// normal
 		String name = "world";
 		out(c1.run(name));      // Hello world.
+		assertEquals("Hello world.", c1.run(name));
 
 		// curried
 		c1.curry(1, "Goodbye");
 		c1.curry(2, '!');
 		out(c1.run(name));      // Goodbye world!
+		assertEquals("Goodbye world!", c1.run(name));
 	}
 
 	@Test
@@ -207,6 +240,8 @@ public class ClosureFeatures_T {
 		out(string);
 		out("\nis not the same as\n");
 		out(closure.run(string));
+
+		assertEquals("the way I am.", closure.run(string));
 	}
 
 	  // (used by methodCallingTest)

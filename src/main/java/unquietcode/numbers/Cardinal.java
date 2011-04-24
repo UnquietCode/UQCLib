@@ -72,7 +72,9 @@ public class Cardinal {
 	    ArrayList<String> chunks = new ArrayList<String>();
         StringBuilder sb = new StringBuilder();
 
-		if (num < 0) {
+		if (num == -2147483648) {
+			return "negative two billion one hundred forty-seven million four hundred eighty-three thousand six hundred forty-eight";
+		} else if (num < 0) {
 			sb.append("negative ");
 			num *= -1;
 		} else if (num == 0)

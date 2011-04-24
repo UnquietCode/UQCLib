@@ -27,7 +27,20 @@ import java.util.ArrayList;
  */
 public class NumberTools {
 
+	/**
+	 * Splits the digits into an array. Does not account for negatives numbers.
+	 * eg, -10 will be [1, 0], and not [-1, 0];
+	 *
+	 * @param num
+	 * @return array of digits
+	 */
 	public static int[] splitDigits(int num) {
+		if (num == -2147483648) {
+			return new int[]{2,1,4,7,4,8,3,6,4,8};
+		} else if (num < 0) {
+			num *= -1;
+		}
+
 		ArrayList<Integer> digits = new ArrayList<Integer>();
 
 		do {
@@ -47,7 +60,9 @@ public class NumberTools {
 		int cur;
 		boolean negative = false;
 
-		if (num < 0) {
+		if (num == -2147483648) {
+			return "-2,147,483,648";
+		} else if (num < 0) {
 			negative = true;
 			num *= -1;
 		}
@@ -79,13 +94,15 @@ public class NumberTools {
 	public static String truncateDouble(double val, int places) {
 		boolean negative = false;
 
-		if (val < 0) {
+		if (val == Double.NaN || val == Double.NEGATIVE_INFINITY || val == Double.MIN_VALUE) {
+			return String.valueOf(val);
+		} else if (val < 0) {
 			val *= -1;
 			negative = true;
 		}
 
-		int front = (int) val;
-		String sFront = Integer.toString(front);
+		long front = (long) val;
+		String sFront = Long.toString(front);
 		String rest = Double.toString(val).substring(sFront.length()+1);
 		int aPlaces = places > rest.length()
 					? rest.length()

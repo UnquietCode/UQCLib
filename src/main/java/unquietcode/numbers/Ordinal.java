@@ -116,7 +116,7 @@ public class Ordinal {
 	
 	//static methods
 	public static String toOrdinal(int number) {
-		return setShort(number);
+		return toOrdinal(number, false);
 	}
 	
 	public static String toOrdinal(int number, boolean displayLong) {

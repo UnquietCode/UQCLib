@@ -53,6 +53,10 @@ public class Iterables {
 	 * @return
 	 */
 	public static Iterable<Integer> range(final int start, final int stop, final int step) {
+		if (step == 0) {
+			throw new IllegalArgumentException("Step should not be 0 (infinite loop).");
+		}
+
 		return new Iterable<Integer>() {
 			public Iterator<Integer> iterator() {
 				return new Iterator<Integer>() {
@@ -68,15 +72,22 @@ public class Iterables {
 							throw new NoSuchElementException();
 						}
 
+					 // bounds checks
 						int retval = current;
 						current += step;
 
 						if (step < 0) {
-							if (current <= stop)
+
+							if ((current >= retval)
+							||  (current <= stop)) {
 								good = false;
+							}
 						} else {
-							if (current >= stop)
+
+							if ((current <= retval)
+							||  (current >= stop)) {
 								good = false;
+							}
 						}
 
 						return retval;

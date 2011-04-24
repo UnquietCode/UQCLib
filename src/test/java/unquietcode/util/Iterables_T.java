@@ -31,7 +31,7 @@ public class Iterables_T {
 
 	@Test
 	public void rangeTest() {
-		for (int x : range(10,0,-1)) {
+		for (long x : range(10,0,-1)) {
 			System.out.println(x);
 		}
 	}
