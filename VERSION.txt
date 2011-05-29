@@ -1,0 +1,25 @@
+# Version 0.1 - 'Zedoon'
+Notes also available at: https://github.com/UnquietCode/UQCLib/wiki/Zedoon
+
+## What's included in this release.
+As an initial release, a few odds and ends have been added from code spanning several years. The main feature is a
+form of pseudo-closures which I use to facilitate passing around dynamically created functions. These leverage Java's
+anonymous classes, but provide a standardized interface, which is also typed, allowing for easier passing and using.
+
+## How to use.
+The downloads section of GitHub contains a jar file for each version released. The source is also available separately,
+as is the current state of the JavaDocs (more documentation is always on the way, and feel free to help).
+
+## What's in a name?
+In 2007 I was working on an electroacoustic composition which relied heavily on LilyPond, the Scheme-based music
+notation program. My software generated variable note data and then fed it to a template which was rendered by
+LilyPond. Unfortunately, I couldn't just use digits to denote the variables, as they are not allowed. Instead I came up
+with a quick little notation for turning numbers into strings. In English, the first two letters of every cardinal
+number 0-9 are unique: ze, on, tw, th, fo, etc. A few punctuation characters were also available, such as dot ("do"),
+and comma ("co"). Thusly was "ZeOn", a language where numbers and punctuation are always represented by two characters
+at at time.
+
+Hopefully the lineage of the version label is obvious now.
+0.1 => "Zero Dot One" => ZeDoOn => Zedoon
+
+So say hello to Zedoon!

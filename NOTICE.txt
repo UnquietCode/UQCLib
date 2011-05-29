@@ -12,7 +12,7 @@ Date: July 2009
 This version: 0.1 'Zedoon'
 
 Developed by: Benjamin Fagin
-Date: February 2011
+Date: June 2011
 Notes: Original release version
 
 -------------------------------------------
