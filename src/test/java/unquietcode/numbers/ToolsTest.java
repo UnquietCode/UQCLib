@@ -84,35 +84,4 @@ public class ToolsTest {
 			out(NumberTools.addCommas(number));
 		}
 	}
-
-	@Test
-	public void percentages() {
-		//15 random values
-		for (int i=0; i < 15; ++i) {
-			Random gen = new Random();
-			double value = gen.nextDouble()*15;
-			int places = gen.nextInt(6);
-			out(value + "\t"+ places +" places\t" + NumberTools.percentage(value, places));
-		}
-	}
-
-	@Test
-	public void percentagesSpecial() {
-		for (double value : new double[] {0d, 1.0000000000001}) {
-			Random gen = new Random();
-			int places = gen.nextInt(10);
-			out(value + "\t"+ places +" places\t" + NumberTools.percentage(value, places));
-		}
-	}
-
-	@Test
-	public void percentagesNegatives() {
-		//15 random values
-		for (int i=0; i < 15; ++i) {
-			Random gen = new Random();
-			double value = gen.nextDouble()*-1000;
-			int places = gen.nextInt(6);
-			out(value + "\t"+ places +" places\t" + NumberTools.percentage(value, places));
-		}
-	}
 }

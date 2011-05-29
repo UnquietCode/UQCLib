@@ -87,9 +87,10 @@ public class NumberTools {
 		return sb.toString();
 	}
 
-	public static String percentage(double val, int places) {
-		return truncateDouble(val, places) + "%";
-	}
+//TODO need to resolve issues with precision
+//	public static String percentage(double val, int places) {
+//		return truncateDouble(val, places) + "%";
+//	}
 
 	public static String truncateDouble(double val, int places) {
 		boolean negative = false;

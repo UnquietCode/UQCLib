@@ -19,6 +19,7 @@
 
 package unquietcode.util;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -40,8 +41,10 @@ public class Pair_T {
 
 		Pair<String, String> p5 = new Pair<String, String>("is", "different");
 
+		// sort by first
 		Pair<Integer, String> pairs[] = new Pair[]{p4, p2, p1, p3};
 		Arrays.sort(pairs, new Pair.Comparator1to1<Integer>());
+		Assert.assertArrayEquals(new Object[]{p2, p4, p1, p3}, pairs);
 
 		for (Pair p : pairs) {
 			System.out.println(p.second);
@@ -49,10 +52,12 @@ public class Pair_T {
 
 		System.out.println();
 
+		// sort by second
 		ArrayList<Pair<?, String>> plist = new ArrayList<Pair<?, String>>();
 		plist.addAll(Arrays.asList(pairs));
 		plist.add(p5);
 		Collections.sort(plist, new Pair.Comparator2to2<String>());
+		Assert.assertArrayEquals(new Object[]{p5, p1, p2, p3, p4}, plist.toArray());
 
 		for (Pair p : plist) {
 			System.out.println(p.second);
